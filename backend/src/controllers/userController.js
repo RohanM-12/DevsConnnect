@@ -11,6 +11,11 @@ export const createUser = async (req, res) => {
   });
   //   console.log(result);
   if (result == null) {
+    if (password.length < 6)
+      return res.json({
+        status: 400,
+        message: "Password Length must be greater than 6",
+      });
     const hashedPassword = await bcrypt.hash(password, 10);
     const createResult = await prisma.user.create({
       data: {
@@ -20,9 +25,9 @@ export const createUser = async (req, res) => {
         email: email,
       },
     });
-    console.log(createResult);
+
     if (createResult) {
-      res.json({
+      return res.json({
         status: "200",
         message: "User registered successfully",
       });
@@ -31,6 +36,33 @@ export const createUser = async (req, res) => {
     return res.json({
       status: "400",
       message: "User already registered with email or registration number",
+    });
+  }
+};
+
+export const loginUser = async (req, res) => {
+  const { regNo, password } = req.query;
+  const result = await prisma.user.findUnique({
+    where: {
+      registrationNo: regNo,
+    },
+  });
+  console.log(result);
+  if (result == null) {
+    return res.json({
+      status: 400,
+      message: "user nor found, please register to login",
+    });
+  }
+  if (result && (await bcrypt.compare(password, result.password))) {
+    return res.json({
+      status: 200,
+      message: "Login Successful",
+    });
+  } else {
+    return res.json({
+      status: 400,
+      message: "Invalid credentials",
     });
   }
 };

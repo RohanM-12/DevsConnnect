@@ -24,7 +24,7 @@ const Register = () => {
   };
   return (
     <>
-      <div className=" flex justify-center items-center h-screen bg-indigo-100">
+      <div className=" flex justify-center items-center h-screen">
         <div className=" bg-white rounded-2xl h-auto w-96 shadow-2xl border-2 border-gray-300">
           <h1 className="text-indigo-600 text-center font-bold text-xl font-mono my-4 ">
             <span className="flex justify-center">
@@ -54,7 +54,13 @@ const Register = () => {
               </Form.Item>
               <Form.Item
                 name={"password"}
-                rules={[{ required: true, message: "Please provide input" }]}
+                rules={[
+                  { required: true, message: "Please provide input" },
+                  {
+                    len: 6,
+                    message: "Password Length must be greater than 6",
+                  },
+                ]}
               >
                 <Password
                   autoComplete="current-password"
