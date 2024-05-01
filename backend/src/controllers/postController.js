@@ -2,16 +2,16 @@ import prisma from "../db/db.config.js";
 
 export const createPost = async (req, res) => {
   try {
+    console.log(req.body.thumbnailImage);
     const {
       Title,
       Description,
       gitHubLink,
       deployedLink,
-      //   thumbnailImage,
       demoVideoLink,
       technologiesUsed,
     } = req.body;
-
+    let path = `${Date.now()}-${req?.body.thumbnailImage.name}`;
     const result = await prisma.posts.create({
       data: {
         name: Title,
@@ -19,7 +19,8 @@ export const createPost = async (req, res) => {
         gitHubLink: gitHubLink,
         deployedLink: deployedLink,
         demoVideoLink: demoVideoLink,
-        technologiesUsed: technologiesUsed.join(","),
+        technologiesUsed: technologiesUsed.toString(),
+        thumbnailImgURL: path,
       },
     });
     if (result) {
@@ -29,6 +30,7 @@ export const createPost = async (req, res) => {
     return res.json({
       status: 500,
       message: "Error while uploading post ",
+      error: error.message,
     });
   }
 };

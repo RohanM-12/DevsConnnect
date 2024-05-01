@@ -26,7 +26,7 @@ datasource db {
   gitHubLink String?
   deployedLink String ?
   demoVideoLink String?
-  
+  thumbnailImgURL String?
   technologiesUsed String?
   created_at DateTime @default(now())
  }
