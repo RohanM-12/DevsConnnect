@@ -13,8 +13,20 @@ datasource db {
   id Int  @id  @default(autoincrement())
   registrationNo String @unique 
   name String 
-  email String 
+  email String  @unique
   password String
+  collegeName String
   created_At DateTime @default(now())
+ }
 
+ model posts {
+  id  Int @id @default(autoincrement()) 
+  name String
+  description String
+  gitHubLink String?
+  deployedLink String ?
+  demoVideoLink String?
+  
+  technologiesUsed String?
+  created_at DateTime @default(now())
  }

@@ -5,6 +5,8 @@ import "./App.css";
 import HomePage from "./Pages/homePage";
 import Login from "./Pages/login";
 import Register from "./Pages/register";
+import UploadPost from "./Pages/uploadPost";
+import PageNotFound from "./Pages/PageNotFound";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/createPost" element={<UploadPost />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
       </div>

@@ -1,63 +1,84 @@
 import prisma from "../db/db.config.js";
 import bcrypt from "bcrypt";
-
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 export const createUser = async (req, res) => {
-  const { registrationNo, name, password, email } = req.body;
-
+  const { registrationNo, name, password, email, collegeName } = req.body;
+  console.log(req.body);
   const result = await prisma.user.findUnique({
     where: {
-      registrationNo: registrationNo,
+      email: email,
     },
   });
-  //   console.log(result);
+
   if (result == null) {
     if (password.length < 6)
       return res.json({
         status: 400,
         message: "Password Length must be greater than 6",
       });
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const createResult = await prisma.user.create({
-      data: {
-        registrationNo: registrationNo,
-        name: name,
-        password: hashedPassword,
-        email: email,
-      },
-    });
-
-    if (createResult) {
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const createResult = await prisma.user.create({
+        data: {
+          registrationNo: registrationNo,
+          name: name,
+          password: hashedPassword,
+          email: email,
+          collegeName: collegeName.toUpperCase(),
+        },
+      });
+      if (createResult) {
+        return res.json({
+          status: "200",
+          message: "User registered successfully",
+        });
+      }
+    } catch (error) {
       return res.json({
-        status: "200",
-        message: "User registered successfully",
+        status: 500,
+        message: "internal server error",
       });
     }
-  } else if (result != null && result?.registrationNo === registrationNo) {
+  } else if (
+    result?.registrationNo === registrationNo ||
+    result.email === email
+  ) {
     return res.json({
       status: "400",
-      message: "User already registered with email or registration number",
+      message: "User already registered with this email or registration no ",
     });
   }
 };
 
 export const loginUser = async (req, res) => {
-  const { regNo, password } = req.query;
+  const { email, password } = req.query;
+
   const result = await prisma.user.findUnique({
     where: {
-      registrationNo: regNo,
+      email: email.toString(),
     },
   });
   console.log(result);
   if (result == null) {
     return res.json({
       status: 400,
-      message: "user nor found, please register to login",
+      message: "user not found, please register to login",
     });
   }
+  const token = jwt.sign({ result }, process.env.SECRET, { expiresIn: "7d" });
+  // console.log(result);
   if (result && (await bcrypt.compare(password, result.password))) {
     return res.json({
       status: 200,
       message: "Login Successful",
+      token: token,
+      userData: {
+        name: result.name,
+        email: result.email,
+        collegeName: result.collegeName,
+      },
     });
   } else {
     return res.json({

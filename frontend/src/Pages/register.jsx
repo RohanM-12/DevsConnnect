@@ -1,5 +1,4 @@
 import { Button, Form, Input } from "antd";
-
 import Password from "antd/es/input/Password";
 import { FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,16 +34,22 @@ const Register = () => {
           <div className="p-5">
             <Form onFinish={onFinish}>
               <Form.Item
+                name={"email"}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please provide a valid email",
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input className="p-2" placeholder=" Enter Email" />
+              </Form.Item>
+              <Form.Item
                 name={"registrationNo"}
                 rules={[{ required: true, message: "Please provide input" }]}
               >
                 <Input className="p-2" placeholder=" Enter Registration No" />
-              </Form.Item>
-              <Form.Item
-                name={"email"}
-                rules={[{ required: true, message: "Please provide input" }]}
-              >
-                <Input className="p-2" placeholder=" Enter Email" />
               </Form.Item>
               <Form.Item
                 name={"name"}
@@ -53,11 +58,17 @@ const Register = () => {
                 <Input className="p-2" placeholder=" Enter Name" />
               </Form.Item>
               <Form.Item
+                name={"collegeName"}
+                rules={[{ required: true, message: "Please provide input" }]}
+              >
+                <Input className="p-2" placeholder=" Enter college name" />
+              </Form.Item>
+              <Form.Item
                 name={"password"}
                 rules={[
                   { required: true, message: "Please provide input" },
                   {
-                    len: 6,
+                    min: 6,
                     message: "Password Length must be greater than 6",
                   },
                 ]}
@@ -80,13 +91,12 @@ const Register = () => {
                 </Button>
               </div>
             </Form>
+            <Link to={"/login"}>
+              <p className="text-blue-400 text-sm text-center my-3 hover:text-blue-800">
+                Already registered? Login
+              </p>
+            </Link>
           </div>
-
-          <Link to={"/login"}>
-            <p className="text-blue-400 text-sm text-center my-2 hover:text-blue-800">
-              Already registered? Login
-            </p>
-          </Link>
         </div>
       </div>
     </>

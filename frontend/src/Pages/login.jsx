@@ -5,20 +5,33 @@ import { FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../contexts/authContext";
 const Login = () => {
   const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
   const onFinish = async (values) => {
-    const result = await axios.get("/api/v1/user/login", {
-      params: values,
-    });
-
-    if (result.data.status === 200) {
-      toast.success(result?.data.message);
-      navigate("/");
-    } else {
-      toast.error(result.data.message);
+    try {
+      const result = await axios.get("/api/v1/user/login", {
+        params: values,
+      });
+      console.log(result);
+      if (result.data.status === 200) {
+        setAuth({ user: result?.data?.userData, token: result?.data?.token });
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            user: result?.data?.userData,
+            token: result?.data?.token,
+          })
+        );
+        toast.success(result?.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
   return (
     <>
       <div className=" flex justify-center items-center h-screen">
@@ -32,15 +45,16 @@ const Login = () => {
             <div className=" border-t-4 border-gray-200 my-2"></div>
             <div className="p-5 ">
               <Form.Item
-                name={"regNo"}
+                name={"email"}
                 rules={[
                   {
                     required: true,
-                    message: "Please provide input",
+                    type: "email",
+                    message: "Please provide valid email",
                   },
                 ]}
               >
-                <Input className="p-2 s" placeholder=" Enter Registration No" />
+                <Input className="p-2 s" placeholder=" Enter Email" />
               </Form.Item>
               <Form.Item
                 name={"password"}
