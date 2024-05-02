@@ -4,7 +4,7 @@ import { PiUserCircleFill } from "react-icons/pi";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../contexts/authContext";
 import { RiLoginCircleLine } from "react-icons/ri";
-
+import { BsFilePost } from "react-icons/bs";
 const Navbar = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
@@ -25,7 +25,7 @@ const Navbar = () => {
   ];
   return (
     <>
-      <div className="flex justify-between items-center  p-4 bg-blue-600 rounded-sm shadow-sm shadow-gray-800 mb-4 ">
+      <div className="flex justify-between items-center  p-4 bg-indigo-500 rounded-sm shadow-sm shadow-gray-800 mb-4 ">
         <Link to="/">
           <span className=" drop-shadow-3xl ">
             <span className="text-black font-bold text-2xl">{"Devs"}</span>
@@ -35,6 +35,12 @@ const Navbar = () => {
           </span>
         </Link>
         <div className="flex items-center space-x-8">
+          <Link
+            to="/explorePosts"
+            className="text-white text-lg flex items-center font-bold mb-2 "
+          >
+            <BsFilePost className="mr-1" size={23} /> Explore
+          </Link>
           {!auth.user && (
             <Link
               to="/login"

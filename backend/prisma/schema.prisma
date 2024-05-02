@@ -23,8 +23,10 @@ datasource db {
   id  Int @id @default(autoincrement()) 
   name String
   description String
+  user String @default("User")
   gitHubLink String?
   deployedLink String ?
+  likes String[]  
   demoVideoLink String?
   thumbnailImgURL String?
   technologiesUsed String?

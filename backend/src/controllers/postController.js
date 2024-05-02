@@ -38,6 +38,7 @@ export const createPost = async (req, res) => {
 export const getAllPosts = async (req, res) => {
   try {
     const postsData = await prisma.posts.findMany({});
+
     return res.json({ status: 200, message: "success", data: postsData });
   } catch (error) {
     return res.json({ status: 500, message: "Error fetching posts" });

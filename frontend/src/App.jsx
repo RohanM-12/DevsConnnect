@@ -7,6 +7,8 @@ import Login from "./Pages/login";
 import Register from "./Pages/register";
 import UploadPost from "./Pages/uploadPost";
 import PageNotFound from "./Pages/PageNotFound";
+import ExplorePosts from "./Pages/explorePosts";
+import DetailPost from "./Pages/DetailPost";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/createPost" element={<UploadPost />} />
+            <Route path="/explorePosts" element={<ExplorePosts />} />
+            <Route path="/detailsPost/:id" element={<DetailPost />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
