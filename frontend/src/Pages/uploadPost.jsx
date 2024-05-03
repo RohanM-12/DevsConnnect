@@ -77,6 +77,7 @@ const UploadPost = () => {
                   beforeUpload={(file) => handleImageUpload(file)}
                   showUploadList={false}
                   maxCount={1}
+                  className="drop-shadow-lg border-gray-100 "
                 >
                   {previewImage ? (
                     <img

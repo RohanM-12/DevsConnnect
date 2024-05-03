@@ -6,6 +6,8 @@ import {
   deletePost,
   getAllPosts,
   getSinglePost,
+  likePost,
+  removeLikePost,
 } from "../controllers/postController.js";
 
 const storage = multer.diskStorage({
@@ -24,5 +26,7 @@ postRoutes.post("/createPost", upload.single("thumbnailImage"), createPost);
 postRoutes.get("/getPosts", getAllPosts);
 postRoutes.get("/getPost/:id", getSinglePost);
 postRoutes.delete("/deletePost/:id", deletePost);
+postRoutes.put("/addLike", likePost);
+postRoutes.put("/removeLike", removeLikePost);
 
 export default postRoutes;
