@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import axios from "axios";
 const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
       });
     }
   }, []);
+  axios.defaults.headers.common["Authorization"] = auth?.token;
   return (
     <AuthContext.Provider value={[auth, setAuth]}>
       {children}

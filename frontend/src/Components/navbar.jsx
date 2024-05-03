@@ -1,6 +1,6 @@
 import { Dropdown, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { PiUserCircleFill } from "react-icons/pi";
+import { PiUserCircleFill, PiUserListBold } from "react-icons/pi";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../contexts/authContext";
 import { RiLoginCircleLine } from "react-icons/ri";
@@ -18,10 +18,13 @@ const Navbar = () => {
         localStorage.removeItem("auth");
       },
     },
-    // {
-    //   label: "Users",
-    //   icon: <PiUserListBold size={20} />,
-    // },
+    {
+      label: "Profile",
+      icon: <PiUserListBold size={20} />,
+      onClick: () => {
+        navigate("/profile");
+      },
+    },
   ];
   return (
     <>
@@ -58,7 +61,12 @@ const Navbar = () => {
           >
             <a onClick={(e) => e.preventDefault()}>
               <Space>
-                <span className="flex items-center ">
+                <span
+                  className="flex items-center hover:cursor-pointer "
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
                   <PiUserCircleFill fontSize={35} className="text-white" />
                   <p className="text-white font-mono font-bold">
                     {auth && auth?.user?.name.trim().split(" ")[0]}

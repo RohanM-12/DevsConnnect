@@ -1,21 +1,29 @@
 import React from "react";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { HeartTwoTone } from "@ant-design/icons";
 import { Avatar, Card, Tag } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 const PostCard = ({ post }) => {
+  const tagColors = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "pink",
+    "gray",
+    "cyan",
+    "magenta",
+  ];
   const navigate = useNavigate();
   return (
     <div key={post.id} className="mb-5">
       <Card
         style={{ width: 300 }}
-        className="shadow-md hover:drop-shadow-2xl"
+        className="shadow-md hover:drop-shadow-xl"
         cover={
           <>
             <img
@@ -67,7 +75,11 @@ const PostCard = ({ post }) => {
             </>
           }
           description={post?.technologiesUsed?.split(",").map((item, i) => (
-            <Tag key={i} color="orange" className="p-1 m-1">
+            <Tag
+              key={i}
+              color={tagColors[Math.floor(Math.random() * tagColors.length)]}
+              className="p-1 m-1"
+            >
               {item.toUpperCase()}
             </Tag>
           ))}

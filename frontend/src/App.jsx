@@ -9,6 +9,8 @@ import UploadPost from "./Pages/uploadPost";
 import PageNotFound from "./Pages/PageNotFound";
 import ExplorePosts from "./Pages/explorePosts";
 import DetailPost from "./Pages/DetailPost";
+import UserProfile from "./Pages/userProfile";
+import PrivateRoute from "./Components/Routes/Private";
 
 function App() {
   return (
@@ -20,9 +22,12 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/createPost" element={<UploadPost />} />
+            <Route path="/createPost" element={<PrivateRoute />}>
+              <Route path="" element={<UploadPost />} />
+            </Route>
             <Route path="/explorePosts" element={<ExplorePosts />} />
             <Route path="/detailsPost/:id" element={<DetailPost />} />
+            <Route path="/profile" element={<UserProfile />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>

@@ -87,3 +87,14 @@ export const loginUser = async (req, res) => {
     });
   }
 };
+
+export const testController = async (req, res) => {
+  try {
+    res.json({ status: 200, message: "authenticated User" });
+  } catch (error) {
+    res.json({
+      status: "Server Error",
+      message: "Error in authenticationg User",
+    });
+  }
+};

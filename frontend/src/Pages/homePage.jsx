@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BsPostcardHeartFill } from "react-icons/bs";
 import { useAuth } from "../contexts/authContext";
 import { FaFileUpload } from "react-icons/fa";
-import { TbUserCode } from "react-icons/tb";
+import { PiBrowsersFill } from "react-icons/pi";
 import { FaLaptopCode } from "react-icons/fa";
 import { FaSquareGithub } from "react-icons/fa6";
 import { RiTeamFill } from "react-icons/ri";
@@ -34,11 +34,20 @@ const HomePage = () => {
             <button
               type="button"
               onClick={() => navigate("/createPost")}
-              className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-6 py-3 text-center me-2 mb-2 my-5 "
+              className=" text-white hover:drop-shadow-xl bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-6 py-3 text-center me-2 mb-2 my-5 "
             >
               <span className="flex items-center">
-                <BsPostcardHeartFill size={30} className="mx-2" /> POST YOUR
+                <BsPostcardHeartFill size={30} className="mx-2" /> | POST YOUR
                 PROJECT
+              </span>
+            </button>
+            <button
+              onClick={() => navigate("/explorePosts")}
+              type="button"
+              className="text-white hover:drop-shadow-xl bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-52"
+            >
+              <span className="flex items-center p-0.5">
+                <PiBrowsersFill size={30} className="mx-2" /> | Explore Projects
               </span>
             </button>
           </div>
@@ -63,7 +72,7 @@ const HomePage = () => {
           <span className="flex justify-center items-center">
             <RiTeamFill size={30} className="my-2 " />
           </span>
-          REQUEST COLLABORATION
+          REQUEST CONTRIBUTION
         </div>
         <span className="text-center font-extrabold drop-shadow-2xl text-lg text-blue-500 ">
           WHAT IS DEVSCONNECT?
