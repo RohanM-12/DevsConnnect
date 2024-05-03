@@ -18,6 +18,7 @@ const Spinner = ({ Size, Timer }) => {
 
   return (
     <LoadingOutlined
+      className="text-blue-500"
       style={{
         fontSize: `${Size}px`,
       }}

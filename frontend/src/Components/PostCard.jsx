@@ -1,26 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { FaCodePullRequest } from "react-icons/fa6";
-import { HeartTwoTone } from "@ant-design/icons";
+import { BiDetail } from "react-icons/bi";
 import { Avatar, Card, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useAuth } from "../contexts/authContext";
+import axios from "axios";
 const { Meta } = Card;
 const PostCard = ({ post }) => {
-  const tagColors = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "purple",
-    "pink",
-    "gray",
-    "cyan",
-    "magenta",
-  ];
+  const [liked, setLiked] = useState();
+  const [auth] = useAuth();
+
   const navigate = useNavigate();
+  useEffect(() => {
+    setLiked(post?.likes?.includes(auth?.user?.id?.toString()));
+  }, [post.likes, auth.user.id]);
+
+  const handleLike = async (id, status) => {
+    if (status == 1) {
+      const res = await axios.put("/api/v1/posts/addlike", {
+        userID: auth?.user?.id,
+        id,
+      });
+      setLiked(true);
+    } else {
+      await axios.put("/api/v1/posts/removeLike", {
+        userID: auth?.user?.id,
+        id,
+      });
+      setLiked(false);
+    }
+  };
+
   return (
-    <div key={post.id} className="mb-5">
+    <div key={post?.id} className="mb-5">
       <Card
         style={{ width: 300 }}
         className="shadow-md hover:drop-shadow-xl"
@@ -36,8 +50,22 @@ const PostCard = ({ post }) => {
         }
         actions={[
           <>
-            <span className="text-lg ">
-              <HeartTwoTone key={"like"} twoToneColor="#eb2f96" />
+            <span className="flex justify-center items-center mt-1 text-red-500   ">
+              {liked ? (
+                <FaHeart
+                  key={"liked"}
+                  onClick={() => handleLike(post?.id, 0)}
+                  className="text-red-600   "
+                  size={17}
+                />
+              ) : (
+                <FaRegHeart
+                  key={"unliked"}
+                  onClick={() => handleLike(post?.id, 1)}
+                  className="text-red-600"
+                  size={17}
+                />
+              )}
             </span>
           </>,
           <>
@@ -46,8 +74,12 @@ const PostCard = ({ post }) => {
             </span>
           </>,
           <>
-            <span className="text-2xl">
-              <EllipsisOutlined key="ellipsis" />
+            <span className="flex justify-center items-center mt-1 text-gray-600">
+              <BiDetail
+                onClick={() => navigate(`/detailsPost/${post?.id}`)}
+                key="ellipsis"
+                size={19}
+              />
             </span>
           </>,
         ]}
@@ -70,19 +102,20 @@ const PostCard = ({ post }) => {
                 className="hover:cursor-pointer hover:text-blue-300"
                 onClick={() => navigate(`/detailsPost/${post?.id}`)}
               >
-                {post?.name}
+                {post?.name?.length > 20
+                  ? post?.name?.substring(0, 20) + "..."
+                  : post?.name}
               </span>
             </>
           }
-          description={post?.technologiesUsed?.split(",").map((item, i) => (
-            <Tag
-              key={i}
-              color={tagColors[Math.floor(Math.random() * tagColors.length)]}
-              className="p-1 m-1"
-            >
-              {item.toUpperCase()}
-            </Tag>
-          ))}
+          description={post?.technologiesUsed
+            ?.split(",")
+            .slice(0, 3)
+            .map((item, i) => (
+              <Tag key={i} color={"red"} className="p-1 m-1">
+                {item.toUpperCase()}
+              </Tag>
+            ))}
         />
       </Card>
     </div>

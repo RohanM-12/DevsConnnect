@@ -90,8 +90,9 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   try {
-    const userId = req.query.userID;
-    const postId = parseInt(req.query.id);
+    console.log(req.body);
+    const userId = req.body.userID.toString();
+    const postId = parseInt(req.body.id);
 
     let postToLike = await prisma.posts.findUnique({
       where: {
@@ -134,8 +135,8 @@ export const likePost = async (req, res) => {
 
 export const removeLikePost = async (req, res) => {
   try {
-    const userID = req.query.userID;
-    const postID = parseInt(req.query.id);
+    const userID = req.body.userID.toString();
+    const postID = parseInt(req.body.id);
     const postToRemoveLike = await prisma.posts.findUnique({
       where: {
         id: postID,
@@ -149,8 +150,8 @@ export const removeLikePost = async (req, res) => {
       });
     }
     console.log(postToRemoveLike);
-    let updatedLikes = postToRemoveLike.likes;
-    updatedLikes.filter((id) => id !== userID);
+    let updatedLikes = postToRemoveLike?.likes?.filter((id) => id !== userID);
+    console.log(updatedLikes);
     const updatedPost = await prisma.posts.update({
       where: {
         id: postID,
