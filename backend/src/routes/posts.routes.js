@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-
+import { requireSignIn } from "../middlewares/authMiddleware.js";
 import {
   createPost,
   deletePost,
@@ -22,7 +22,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const postRoutes = Router();
 
-postRoutes.post("/createPost", upload.single("thumbnailImage"), createPost);
+postRoutes.post(
+  "/createPost",
+
+  upload.single("thumbnailImage"),
+  createPost
+);
 postRoutes.get("/getPosts", getAllPosts);
 postRoutes.get("/getPost/:id", getSinglePost);
 postRoutes.delete("/deletePost/:id", deletePost);

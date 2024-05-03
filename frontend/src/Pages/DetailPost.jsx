@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Image, Tag } from "antd";
 import axios from "axios";
 import Spinner from "../Components/Spinner";
@@ -10,6 +10,7 @@ import { FaCodePullRequest } from "react-icons/fa6";
 const DetailPost = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState(null);
+  console.log(postData);
   const tagColors = [
     "red",
     "orange",
@@ -46,8 +47,10 @@ const DetailPost = () => {
               src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             />
           </div>
-          <div className="p-8">
-            <h2 className="text-2xl font-bold mb-4">{postData?.name}</h2>
+          <div className="p-2">
+            <h2 className="text-2xl font-bold mb-4">
+              <> {postData?.name}</>
+            </h2>
             <p className="text-gray-600 mb-4">{postData?.description}</p>
             <div className="flex items-center mb-4">
               <span className="font-semibold mr-2">Uploaded By:</span>
@@ -69,29 +72,35 @@ const DetailPost = () => {
                 ))}
               </div>
             </div>
-            <div className=" flex m-10">
-              <Tag
-                className="p-3  w-36 "
-                icon={<FaGithub size={20} />}
-                color="black"
-              >
-                GITHUB
-              </Tag>
-              <Tag
-                className="p-3 w-36"
-                icon={<MdOndemandVideo size={20} />}
-                color="#55acee"
-              >
-                DEMO VIDEO
-              </Tag>
+            <div className=" flex items-center justify-center p-10">
+              <Link to={postData?.gitHubLink}>
+                <Tag
+                  className="p-3 w-36 "
+                  icon={<FaGithub size={20} />}
+                  color="black"
+                >
+                  GITHUB
+                </Tag>
+              </Link>
+              <Link to={postData?.demoVideoLink}>
+                <Tag
+                  className="p-3 w-36"
+                  icon={<MdOndemandVideo size={20} />}
+                  color="#55acee"
+                >
+                  DEMO VIDEO
+                </Tag>
+              </Link>
 
-              <Tag
-                className="p-3 w-36"
-                icon={<VscLiveShare size={20} />}
-                color="indigo"
-              >
-                DEPLOYED URL
-              </Tag>
+              <Link to={postData?.deployedLink}>
+                <Tag
+                  className="p-3 w-36"
+                  icon={<VscLiveShare size={20} />}
+                  color="indigo"
+                >
+                  DEPLOYED URL
+                </Tag>
+              </Link>
             </div>
             <div className="  grid grid-cols-4">
               <div></div>

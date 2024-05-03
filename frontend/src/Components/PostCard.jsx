@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { BiDetail } from "react-icons/bi";
-import { Avatar, Card, Tag } from "antd";
+import { Avatar, Badge, Card, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
@@ -10,34 +10,40 @@ import axios from "axios";
 const { Meta } = Card;
 const PostCard = ({ post }) => {
   const [liked, setLiked] = useState();
+  const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
 
   const navigate = useNavigate();
   useEffect(() => {
     setLiked(post?.likes?.includes(auth?.user?.id?.toString()));
-  }, [post.likes, auth.user.id]);
+  }, [post?.likes, auth?.user?.id]);
 
   const handleLike = async (id, status) => {
-    if (status == 1) {
-      const res = await axios.put("/api/v1/posts/addlike", {
+    if (status == 1 && auth?.user) {
+      const { data } = await axios.put("/api/v1/posts/addlike", {
         userID: auth?.user?.id,
         id,
       });
       setLiked(true);
-    } else {
-      await axios.put("/api/v1/posts/removeLike", {
+      console.log(data);
+      setLikesCount(data?.likesCount);
+    } else if (status === 0 && auth?.user) {
+      const { data } = await axios.put("/api/v1/posts/removeLike", {
         userID: auth?.user?.id,
         id,
       });
       setLiked(false);
+      setLikesCount(data?.likesCount);
+    } else {
+      navigate("/login");
     }
   };
 
   return (
-    <div key={post?.id} className="mb-5">
+    <div key={post?.id} className="mb-5 flex justify-center lg:ml-1  ">
       <Card
-        style={{ width: 300 }}
-        className="shadow-md hover:drop-shadow-xl"
+        className="shadow-md hover:drop-shadow-xl  "
+        style={{ width: 320 }}
         cover={
           <>
             <img
@@ -50,27 +56,36 @@ const PostCard = ({ post }) => {
         }
         actions={[
           <>
-            <span className="flex justify-center items-center mt-1 text-red-500   ">
+            <span className="flex justify-center ml-5 mt-1 text-red-500 ">
               {liked ? (
                 <FaHeart
                   key={"liked"}
                   onClick={() => handleLike(post?.id, 0)}
-                  className="text-red-600   "
-                  size={17}
+                  className="text-red-600 "
+                  size={23}
                 />
               ) : (
                 <FaRegHeart
                   key={"unliked"}
                   onClick={() => handleLike(post?.id, 1)}
                   className="text-red-600"
-                  size={17}
+                  size={23}
                 />
               )}
+              <Badge
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  color: "black",
+                  userSelect: "none",
+                }}
+                count={likesCount}
+                className="mx-1 "
+              />
             </span>
           </>,
           <>
             <span className="flex justify-center items-center mt-2 text-blue-500 ">
-              <FaCodePullRequest key={"request"} size={14} />
+              <FaCodePullRequest key={"request"} size={18} />
             </span>
           </>,
           <>
@@ -78,7 +93,7 @@ const PostCard = ({ post }) => {
               <BiDetail
                 onClick={() => navigate(`/detailsPost/${post?.id}`)}
                 key="ellipsis"
-                size={19}
+                size={24}
               />
             </span>
           </>,
@@ -112,8 +127,10 @@ const PostCard = ({ post }) => {
             ?.split(",")
             .slice(0, 3)
             .map((item, i) => (
-              <Tag key={i} color={"red"} className="p-1 m-1">
-                {item.toUpperCase()}
+              <Tag key={i} color={"blue"} className="p-1  m-1">
+                <span className="text-blue-600 font-semibold">
+                  {item.toUpperCase()}{" "}
+                </span>
               </Tag>
             ))}
         />

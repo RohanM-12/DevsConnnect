@@ -4,7 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { FaLaptopCode, FaImage, FaUpload } from "react-icons/fa";
 import { PlusOutlined } from "@ant-design/icons";
-
+import urlRegex from "url-regex";
+import { DiGithubBadge } from "react-icons/di";
 const UploadPost = () => {
   const [techList, setTechList] = useState([]);
   const [thumbnailImage, setThumbnailImage] = useState(null);
@@ -22,6 +23,14 @@ const UploadPost = () => {
         toast("Please select thumbnail image", {
           icon: <FaImage size={25} className="text-blue-500" />,
         });
+        return;
+      }
+      if (!urlRegex().test(values.gitHubLink)) {
+        console.log(values);
+        toast("PLease enter a valid URL", {
+          icon: <DiGithubBadge size={25} className="text-blue-500" />,
+        });
+        return;
       }
       const result = await axios.post("/api/v1/posts/createPost", {
         ...values,
@@ -66,9 +75,10 @@ const UploadPost = () => {
         <Form
           layout="vertical"
           size="large"
-          onFinish={onFinish}
           enctype="multipart/form-data"
-          // className="flex justify-center items-center"
+          className="p-10"
+          onFinish={onFinish}
+          // className="flex justify-center items-center "
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-white rounded-lg shadow-lg">
             <div>
@@ -98,35 +108,16 @@ const UploadPost = () => {
                 name={"Title"}
                 rules={[{ required: true }]}
               >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Project Description"
-                name="Description"
-                rules={[{ required: true }]}
-              >
-                <Input.TextArea rows={5} />
-              </Form.Item>
-            </div>
-            <div>
-              <Form.Item label="GitHub Repo. URL" name={"gitHubLink"}>
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Deployed URL (if available)"
-                name={"deployedLink"}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item label="Demo Video URL" name={"demoVideoLink"}>
-                <Input />
+                <Input placeholder="Enter title of your project" />
               </Form.Item>
               <Form.Item name={"technologiesUsed"} label="Technologies Used">
                 <Select
+                  placeholder="Select the technologies used in your project"
                   mode="multiple"
                   showArrow
                   tagRender={(props) => (
                     <Tag
+                      className="p-1 text-md m-2"
                       color={tagColors[props.value.length % tagColors.length]}
                       closable={true}
                       onClose={() => {
@@ -172,11 +163,35 @@ const UploadPost = () => {
                   onChange={(value) => setTechList(value)}
                 />
               </Form.Item>
-              <Form.Item className="my-6">
+            </div>
+            <div>
+              <Form.Item
+                label="Project Description"
+                name="Description"
+                rules={[{ required: true }]}
+              >
+                <Input.TextArea
+                  placeholder="Describe in short what your project is about..."
+                  rows={5}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Deployed URL (if available)"
+                name={"deployedLink"}
+              >
+                <Input placeholder="Paste URL of your project deployed " />
+              </Form.Item>
+              <Form.Item label="Demo Video URL" name={"demoVideoLink"}>
+                <Input placeholder="Do you have Demo Video?" />
+              </Form.Item>
+              <Form.Item label="GitHub Repo. URL" name={"gitHubLink"}>
+                <Input placeholder="Paste your GitHub repository URL" />
+              </Form.Item>
+              <Form.Item className="my-6 flex justify-center py-4 ">
                 <Button
                   htmlType="submit"
-                  className="bg-blue-600 text-white hover:bg-blue-400 flex items-center"
-                  onClick={onFinish}
+                  className="bg-blue-600 text-white hover:bg-blue-400  "
                   icon={<FaUpload className="mr-2" />}
                 >
                   Post Project

@@ -1,4 +1,4 @@
-import { Dropdown, Space } from "antd";
+import { Avatar, Dropdown, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { PiUserCircleFill, PiUserListBold } from "react-icons/pi";
 import { RiLogoutCircleLine } from "react-icons/ri";
@@ -10,19 +10,19 @@ const Navbar = () => {
   const [auth, setAuth] = useAuth();
   const items = [
     {
+      label: "Profile",
+      icon: <PiUserListBold size={20} className="my-3" />,
+      onClick: () => {
+        navigate("/profile");
+      },
+    },
+    {
       label: "LogOut",
-      icon: <RiLogoutCircleLine size={20} />,
+      icon: <RiLogoutCircleLine size={20} className="my-3" />,
       onClick: () => {
         navigate("/login");
         setAuth({ user: null, token: "" });
         localStorage.removeItem("auth");
-      },
-    },
-    {
-      label: "Profile",
-      icon: <PiUserListBold size={20} />,
-      onClick: () => {
-        navigate("/profile");
       },
     },
   ];
@@ -40,9 +40,10 @@ const Navbar = () => {
         <div className="flex items-center space-x-8">
           <Link
             to="/explorePosts"
-            className="text-white text-lg flex items-center font-bold mb-2 "
+            className="text-white text-lg flex items-center font-bold mb-0 "
           >
-            <BsFilePost className="mr-1" size={23} /> Explore
+            <BsFilePost className="" size={35} />
+            <span className=" hidden lg:flex"> Explore </span>
           </Link>
           {!auth.user && (
             <Link
@@ -54,7 +55,7 @@ const Navbar = () => {
           )}
 
           <Dropdown
-            className="float-end mx-2"
+            className="float-end mx-2 "
             menu={{
               items,
             }}
@@ -63,12 +64,26 @@ const Navbar = () => {
               <Space>
                 <span
                   className="flex items-center hover:cursor-pointer "
-                  onClick={() => {
-                    navigate("/profile");
-                  }}
+                  // onClick={() => {
+                  //   navigate("/profile");
+                  // }}
                 >
-                  <PiUserCircleFill fontSize={35} className="text-white" />
-                  <p className="text-white font-mono font-bold">
+                  {/* <PiUserCircleFill fontSize={35} className="text-white" /> */}
+                  {auth?.user && (
+                    <Avatar
+                      className="mx-1 font-bold"
+                      style={{
+                        color: "#f56a00",
+                        backgroundColor: "#fde3cf",
+                        padding: "18px",
+                        fontSize: "20px",
+                      }}
+                    >
+                      {auth?.user?.name?.substring(0, 1).toUpperCase()}
+                    </Avatar>
+                  )}
+
+                  <p className="text-white font-mono font-bold hidden lg:flex ">
                     {auth && auth?.user?.name.trim().split(" ")[0]}
                   </p>
                 </span>

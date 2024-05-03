@@ -13,17 +13,22 @@ const HomePage = () => {
   return (
     <div className="">
       {/* <h1>{JSON.stringify(auth)}</h1> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-10 items-center">
         <div className=" p-6 rounded-xl shadow-md shadow-gray-400 md:col-span-1">
-          <span className=" text-5xl   font-semibold  text-black-600 ">
-            <p className="my-5 mx-1 font-mono"> WELOCOME TO</p>
-            <span className="lg:text-6xl md:text-5xl sm:text-xl  text-blue-600 drop-shadow-xl font-mono ">
+          <span className="  font-semibold  text-black-600 ">
+            <div>
+              <span className=" text-3xl my-5 mx-1 font-mono lg:text-4xl md:text-3xl sm:text-2xl ">
+                WELOCOME TO
+              </span>
+            </div>
+
+            <span className=" text-3xl lg:text-5xl  md:text-3xl text-blue-600 drop-shadow-xl font-mono ">
               DEVSCONNECT
             </span>
           </span>
           <br />
           <p className="my-3">
-            <span className="text-black font-mono text-3xl font-bold">
+            <span className="text-black font-mono text-xl font-bold">
               A platform to Showcase <br />
               <div className="flex">
                 your projects ... <FcIdea size={30} />
@@ -54,25 +59,28 @@ const HomePage = () => {
         </div>
         <div>
           <img
-            className="p-1 ml-20 w-2/3 rounded-xl"
+            className="p-1 ml-20 w-2/3 rounded-xl pointer-events-none "
             alt="Banner"
             src="/images/banner2.gif"
+            draggable="false"
             loading="lazy"
           />
         </div>
       </div>
-      <div className="w-full h-44 bg-blue-100 my-5 grid grid-cols-5 items-center text-center lg:grid md:hidden sm:hidden ">
+      <div className="w-full h-44 bg-blue-100 my-5 lg:grid md:grid grid-cols-5 items-center text-center hidden ">
         <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl">
           <span className="flex justify-center items-center">
             <FaFileUpload size={30} className="my-2" />
           </span>
-          UPLOAD YOUR PROJECT
+          <span className="hidden text-sm lg:block ">UPLOAD YOUR PROJECT </span>
         </div>
         <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl">
           <span className="flex justify-center items-center">
             <RiTeamFill size={30} className="my-2 " />
           </span>
-          REQUEST CONTRIBUTION
+          <span className="lg:block md:hidden sm:hidden text-sm  ">
+            REQUEST CONTRIBUTION{" "}
+          </span>
         </div>
         <span className="text-center font-extrabold drop-shadow-2xl text-lg text-blue-500 ">
           WHAT IS DEVSCONNECT?
@@ -80,14 +88,18 @@ const HomePage = () => {
         <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl">
           <span className="flex justify-center items-center">
             <FaLaptopCode size={30} className="my-2 " />
-          </span>{" "}
-          COLLABORATE WITH DEVS
+          </span>
+          <span className=" lg:block md:hidden sm:hidden text-sm">
+            COLLABORATE WITH DEVS{" "}
+          </span>
         </div>
         <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl">
           <span className="flex justify-center items-center">
             <FaSquareGithub size={30} className="my-2 " />
-          </span>{" "}
-          BUILD TOGETHER
+          </span>
+          <span className=" lg:block md:hidden sm:hidden text-sm">
+            BUILD TOGETHER
+          </span>
         </div>
       </div>
     </div>
