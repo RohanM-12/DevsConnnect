@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import AdminMenu from "../Components/AdminMenu";
 
 const ContributionRequests = () => {
-  return <div>ContributionRequests</div>;
+  const [selectedTab, setSelectedTab] = useState({
+    current: "contributionRequests",
+  });
+  return (
+    <>
+      <div>
+        <AdminMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      </div>
+      <div>ContributionRequests</div>
+    </>
+  );
 };
 
 export default ContributionRequests;

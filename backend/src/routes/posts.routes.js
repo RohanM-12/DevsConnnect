@@ -12,7 +12,7 @@ import {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    return cb(null, "./uploads");
+    return cb(null, "src/routes/uploads");
   },
   filename: function (req, file, cb) {
     return cb(null, `${Date.now()}-${file.originalname}`);
@@ -22,12 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const postRoutes = Router();
 
-postRoutes.post(
-  "/createPost",
-
-  upload.single("thumbnailImage"),
-  createPost
-);
+postRoutes.post("/createPost", upload.single("thumbnailImage"), createPost);
 postRoutes.get("/getPosts", getAllPosts);
 postRoutes.get("/getPost/:id", getSinglePost);
 postRoutes.delete("/deletePost/:id", deletePost);

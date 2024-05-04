@@ -11,6 +11,8 @@ import ExplorePosts from "./Pages/explorePosts";
 import DetailPost from "./Pages/DetailPost";
 import UserProfile from "./Pages/userProfile";
 import PrivateRoute from "./Components/Routes/Private";
+import MyUploads from "./Pages/MyUploads";
+import ContributionRequests from "./Pages/ContributionRequests";
 
 function App() {
   return (
@@ -25,9 +27,21 @@ function App() {
             <Route path="/createPost" element={<PrivateRoute />}>
               <Route path="" element={<UploadPost />} />
             </Route>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/myPosts" element={<MyUploads />} />
+            </Route>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/myProfile" element={<UserProfile />} />
+            </Route>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route
+                path="/contributionRequests"
+                element={<ContributionRequests />}
+              />
+            </Route>
             <Route path="/explorePosts" element={<ExplorePosts />} />
             <Route path="/detailsPost/:id" element={<DetailPost />} />
-            <Route path="/profile" element={<UserProfile />} />
+
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>

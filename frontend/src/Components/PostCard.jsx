@@ -6,13 +6,15 @@ import { Avatar, Badge, Card, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
+import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
+import RequestContribModal from "./Routes/RequestContribModal";
 const { Meta } = Card;
-const PostCard = ({ post }) => {
+const PostCard = ({ post, del }) => {
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
-
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     setLiked(post?.likes?.includes(auth?.user?.id?.toString()));
@@ -25,7 +27,6 @@ const PostCard = ({ post }) => {
         id,
       });
       setLiked(true);
-      console.log(data);
       setLikesCount(data?.likesCount);
     } else if (status === 0 && auth?.user) {
       const { data } = await axios.put("/api/v1/posts/removeLike", {
@@ -56,7 +57,7 @@ const PostCard = ({ post }) => {
         }
         actions={[
           <>
-            <span className="flex justify-center ml-5 mt-1 text-red-500 ">
+            <span className="flex justify-center ml-5 mt-0 text-red-500 ">
               {liked ? (
                 <FaHeart
                   key={"liked"}
@@ -84,12 +85,20 @@ const PostCard = ({ post }) => {
             </span>
           </>,
           <>
-            <span className="flex justify-center items-center mt-2 text-blue-500 ">
-              <FaCodePullRequest key={"request"} size={18} />
+            <span className="flex justify-center items-center mt-0 text-blue-500 ">
+              {del ? (
+                <AiFillDelete size={25} className="" />
+              ) : (
+                <FaCodePullRequest
+                  key={"request"}
+                  size={18}
+                  onClick={() => setOpen(true)}
+                />
+              )}
             </span>
           </>,
           <>
-            <span className="flex justify-center items-center mt-1 text-gray-600">
+            <span className="flex justify-center items-center mt-0 text-gray-600">
               <BiDetail
                 onClick={() => navigate(`/detailsPost/${post?.id}`)}
                 key="ellipsis"
@@ -108,7 +117,8 @@ const PostCard = ({ post }) => {
                 color: "#0070FF",
               }}
             >
-              {post?.user?.toString().slice(0, 1)}
+              {console.log(post)}
+              {post?.user?.toString().slice(0, 1)?.toUpperCase()}
             </Avatar>
           }
           title={
@@ -129,12 +139,15 @@ const PostCard = ({ post }) => {
             .map((item, i) => (
               <Tag key={i} color={"blue"} className="p-1  m-1">
                 <span className="text-blue-600 font-semibold">
-                  {item.toUpperCase()}{" "}
+                  {item?.toUpperCase()}{" "}
                 </span>
               </Tag>
             ))}
         />
       </Card>
+      <div>
+        <RequestContribModal open={open} setOpen={setOpen} />
+      </div>
     </div>
   );
 };

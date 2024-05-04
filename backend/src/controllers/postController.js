@@ -2,7 +2,7 @@ import prisma from "../db/db.config.js";
 
 export const createPost = async (req, res) => {
   try {
-    console.log(req.body.thumbnailImage);
+    console.log(req.body);
     const {
       Title,
       Description,
@@ -10,9 +10,11 @@ export const createPost = async (req, res) => {
       deployedLink,
       demoVideoLink,
       technologiesUsed,
+      userId,
     } = req.body;
-    let path = `${Date.now()}-${req?.body.thumbnailImage.name}`;
-    const result = await prisma.posts.create({
+    console.log(req.file);
+
+    const uploadResult = await prisma.posts.create({
       data: {
         name: Title,
         description: Description,
@@ -21,9 +23,10 @@ export const createPost = async (req, res) => {
         demoVideoLink: demoVideoLink,
         technologiesUsed: technologiesUsed.toString(),
         thumbnailImgURL: path,
+        userId: userId,
       },
     });
-    if (result) {
+    if (uploadResult) {
       return res.json({ status: 200, message: "Post uploaded successfully" });
     }
   } catch (error) {
@@ -37,11 +40,86 @@ export const createPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const postsData = await prisma.posts.findMany({});
+    console.log(req.query);
+    // if (req?.query?.collage) {
+    //   const postsData = await prisma.posts.findMany({
+    //     where: {
+    //       collage: req.query.userId,
+    //     },
+    //     orderBy: {
+    //       created_at: "asc",
+    //     },
+    //     include: {
+    //       user: {
+    //         select: {
+    //           name: true,
+    //         },
+    //       },
+    //     },
+    //   });
+    //   return res.json({
+    //     status: 200,
+    //     message: "success",
+    //     data: postsData,
+    //   });
+    // }
 
-    return res.json({ status: 200, message: "success", data: postsData });
+    if (req?.query?.userId) {
+      const postsData = await prisma.posts.findMany({
+        where: {
+          userId: parseInt(req.query.userId),
+        },
+        orderBy: {
+          created_at: "asc",
+        },
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+      const moddifiedPostData = postsData?.map((post) => ({
+        ...post,
+        user: post.user.name,
+      }));
+      return res.json({
+        status: 200,
+        message: "success",
+        data: moddifiedPostData,
+      });
+    }
+
+    const postsData = await prisma.posts.findMany({
+      orderBy: {
+        created_at: "asc",
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    const moddifiedPostData = postsData?.map((post) => ({
+      ...post,
+      user: post.user.name,
+    }));
+
+    return res.json({
+      status: 200,
+      message: "success",
+      data: moddifiedPostData,
+    });
   } catch (error) {
-    return res.json({ status: 500, message: "Error fetching posts" });
+    return res.json({
+      status: 500,
+      message: "Error fetching posts",
+      error: error.message,
+    });
   }
 };
 
@@ -53,9 +131,20 @@ export const getSinglePost = async (req, res) => {
       where: {
         id: parseInt(pid),
       },
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
-    return res.json({ status: 200, message: "success", data: postData });
+    return res.json({
+      status: 200,
+      message: "success",
+      data: { ...postData, user: postData.user.name },
+    });
   } catch (error) {
     return res.json({
       status: 500,

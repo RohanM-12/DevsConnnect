@@ -9,7 +9,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
- model user {
+ model User {
   id Int  @id  @default(autoincrement())
   registrationNo String @unique 
   name String 
@@ -17,13 +17,15 @@ datasource db {
   password String
   collegeName String
   created_At DateTime @default(now())
+  posts          Posts[]
  }
 
- model posts {
+ model Posts {
   id  Int @id @default(autoincrement()) 
   name String
   description String
-  user String @default("User")
+  user          User     @relation(fields: [userId], references: [id]) // Define the user relation
+  userId         Int 
   gitHubLink String?
   deployedLink String ?
   likes String[]  

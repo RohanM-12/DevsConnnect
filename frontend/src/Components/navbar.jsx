@@ -13,7 +13,7 @@ const Navbar = () => {
       label: "Profile",
       icon: <PiUserListBold size={20} className="my-3" />,
       onClick: () => {
-        navigate("/profile");
+        navigate("/myProfile");
       },
     },
     {
@@ -42,15 +42,15 @@ const Navbar = () => {
             to="/explorePosts"
             className="text-white text-lg flex items-center font-bold mb-0 "
           >
-            <BsFilePost className="" size={35} />
-            <span className=" hidden lg:flex"> Explore </span>
+            <BsFilePost size={35} />
+            <span className="hidden lg:flex">Explore</span>
           </Link>
           {!auth.user && (
             <Link
               to="/login"
-              className="text-white text-lg flex items-center font-bold mb-2 "
+              className="text-white text-lg flex items-center  font-bold  "
             >
-              <RiLoginCircleLine className="mr-1" size={23} /> Login
+              <RiLoginCircleLine className="mr-1" size={25} /> Login
             </Link>
           )}
 

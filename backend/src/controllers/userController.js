@@ -6,7 +6,7 @@ dotenv.config();
 export const createUser = async (req, res) => {
   const { registrationNo, name, password, email, collegeName } = req.body;
   console.log(req.body);
-  const result = await prisma.user.findUnique({
+  const result = await prisma.User.findUnique({
     where: {
       email: email,
     },
@@ -20,7 +20,7 @@ export const createUser = async (req, res) => {
       });
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const createResult = await prisma.user.create({
+      const createResult = await prisma.User.create({
         data: {
           registrationNo: registrationNo,
           name: name,
@@ -55,7 +55,7 @@ export const createUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.query;
 
-  const result = await prisma.user.findUnique({
+  const result = await prisma.User.findUnique({
     where: {
       email: email.toString(),
     },

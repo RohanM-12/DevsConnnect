@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Image, Tag } from "antd";
 import axios from "axios";
 import Spinner from "../Components/Spinner";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaHeart } from "react-icons/fa";
 import { MdOndemandVideo } from "react-icons/md";
 import { VscLiveShare } from "react-icons/vsc";
 import { FaCodePullRequest } from "react-icons/fa6";
@@ -41,7 +41,7 @@ const DetailPost = () => {
     <div className="container mx-auto mt-8">
       {postData ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center ">
             <Image
               width={600}
               src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
@@ -56,6 +56,12 @@ const DetailPost = () => {
               <span className="font-semibold mr-2">Uploaded By:</span>
               <span>{postData?.user}</span>
             </div>
+            <div className="flex  justify-start items-center">
+              <FaHeart key={"liked"} className="text-red-600 mx-2 " size={23} />
+              {" : "}
+              <span className="mx-2">{postData?.likes?.length}</span>
+            </div>
+
             <div className="flex items-center mb-4">
               <span className="font-semibold mr-2">Technologies Used:</span>
               <div>

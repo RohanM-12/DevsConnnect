@@ -6,11 +6,17 @@ import { FaLaptopCode, FaImage, FaUpload } from "react-icons/fa";
 import { PlusOutlined } from "@ant-design/icons";
 import urlRegex from "url-regex";
 import { DiGithubBadge } from "react-icons/di";
+import { useAuth } from "../contexts/authContext";
 const UploadPost = () => {
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
   const [techList, setTechList] = useState([]);
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-
+  const [auth] = useAuth();
   const onFinish = async (values) => {
     try {
       if (techList.length === 0) {
@@ -36,6 +42,7 @@ const UploadPost = () => {
         ...values,
         thumbnailImage,
         technologiesUsed: techList,
+        userId: auth?.user?.id,
       });
       if (result?.data?.status == 200) {
         toast.success("Post uploaded");
@@ -45,7 +52,19 @@ const UploadPost = () => {
     }
   };
 
+  const handleChange = (info) => {
+    if (info.file.status === "uploading") {
+      return;
+    }
+    if (info.file.status === "done") {
+      // getBase64(info.file.originFileObj, (url) => {
+      setThumbnailImage(info.file);
+      console.log(thumbnailImage);
+      // });
+    }
+  };
   const handleImageUpload = (file) => {
+    console.log(file);
     setThumbnailImage(file);
     setPreviewImage(URL.createObjectURL(file));
   };
