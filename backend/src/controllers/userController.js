@@ -55,38 +55,43 @@ export const createUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.query;
-
-  const result = await prisma.User.findUnique({
-    where: {
-      email: email.toString(),
-    },
-  });
-  console.log(result);
-  if (result == null) {
-    return res.json({
-      status: 400,
-      message: "user not found, please register to login",
-      error: error.message,
-    });
-  }
-  const token = jwt.sign({ result }, process.env.SECRET, { expiresIn: "7d" });
-  // console.log(result);
-  if (result && (await bcrypt.compare(password, result.password))) {
-    return res.json({
-      status: 200,
-      message: "Login Successful",
-      token: token,
-      userData: {
-        id: result.id,
-        name: result.name,
-        email: result.email,
-        collegeName: result.collegeName,
+  try {
+    const result = await prisma.User.findUnique({
+      where: {
+        email: email.toString(),
       },
     });
-  } else {
+    console.log(result);
+    if (result == null) {
+      return res.json({
+        status: 400,
+        message: "user not found, please register to login",
+      });
+    }
+    const token = jwt.sign({ result }, process.env.SECRET, { expiresIn: "7d" });
+    // console.log(result);
+    if (result && (await bcrypt.compare(password, result.password))) {
+      return res.json({
+        status: 200,
+        message: "Login Successful",
+        token: token,
+        userData: {
+          id: result.id,
+          name: result.name,
+          email: result.email,
+          collegeName: result.collegeName,
+        },
+      });
+    } else {
+      return res.json({
+        status: 400,
+        message: "Invalid credentials",
+      });
+    }
+  } catch (error) {
     return res.json({
       status: 400,
-      message: "Invalid credentials",
+      message: "login failed server error",
       error: error.message,
     });
   }

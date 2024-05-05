@@ -30,9 +30,9 @@ datasource db {
   likes String[]  
   demoVideoLink String?
   thumbnailImgURL String?
-  technologiesUsed String?
+  technologiesUsed String[]
   created_at DateTime @default(now())
-  contributionRequests ContributionRequests[]
+  contributionRequests ContributionRequests[] 
  }
 
  model ContributionRequests {
@@ -44,7 +44,7 @@ datasource db {
   wishesToWorkOn String
   created_at DateTime @default(now())
   requester User @relation(fields: [requesterId],references: [id])
-  post Posts @relation(fields: [postId] , references: [id])
+  post Posts @relation(fields: [postId] , references: [id] , onDelete: Cascade)
   @@unique([requesterId,postId])
  }
 

@@ -41,7 +41,7 @@ const PostCard = ({ post, del, deletePost }) => {
   };
 
   return (
-    <div key={post?.id} className="mb-5 flex justify-center lg:ml-1  ">
+    <div key={post?.id} className="mb-5 flex justify-center lg:ml-1 mx-8">
       <Card
         className="shadow-md hover:drop-shadow-xl  "
         style={{ width: 320 }}
@@ -136,16 +136,14 @@ const PostCard = ({ post, del, deletePost }) => {
               </span>
             </>
           }
-          description={post?.technologiesUsed
-            ?.split(",")
-            .slice(0, 3)
-            .map((item, i) => (
-              <Tag key={i} color={"blue"} className="p-1  m-1">
-                <span className="text-blue-600 font-semibold">
-                  {item?.toUpperCase()}{" "}
-                </span>
-              </Tag>
-            ))}
+          {...console.log(post?.technologiesUsed)}
+          description={post?.technologiesUsed?.map((item, i) => (
+            <Tag key={i} color={"blue"} className="p-1  m-1">
+              <span className="text-blue-600 font-semibold">
+                {item?.toUpperCase()}{" "}
+              </span>
+            </Tag>
+          ))}
         />
       </Card>
       <div>

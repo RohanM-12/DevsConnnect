@@ -21,7 +21,7 @@ export const createPost = async (req, res) => {
         gitHubLink: gitHubLink,
         deployedLink: deployedLink,
         demoVideoLink: demoVideoLink,
-        technologiesUsed: technologiesUsed.toString(),
+        technologiesUsed: technologiesUsed,
         thumbnailImgURL: "path",
         userId: parseInt(userId),
       },
@@ -40,7 +40,7 @@ export const createPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    console.log(req.query);
+    // console.log(req.query);
     // if (req?.query?.collage) {
     //   const postsData = await prisma.posts.findMany({
     //     where: {
@@ -166,18 +166,11 @@ export const deletePost = async (req, res) => {
     if (!resultPostDelete) {
       return res.json({ status: 401, message: "Post not found to delete" });
     }
-    const resultDeleteRequestsAssociated =
-      await prisma.contributionRequests.deleteMany({
-        where: {
-          postId: resultPostDelete.id,
-        },
-      });
-    if (resultDeleteRequestsAssociated) {
-      return res.json({
-        status: 200,
-        message: "Post Deleted",
-      });
-    }
+
+    return res.json({
+      status: 200,
+      message: "Post Deleted",
+    });
   } catch (error) {
     return res.json({
       status: 500,
