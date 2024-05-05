@@ -10,7 +10,7 @@ import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import RequestContribModal from "./Routes/RequestContribModal";
 const { Meta } = Card;
-const PostCard = ({ post, del }) => {
+const PostCard = ({ post, del, deletePost }) => {
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
@@ -87,7 +87,11 @@ const PostCard = ({ post, del }) => {
           <>
             <span className="flex justify-center items-center mt-0 text-blue-500 ">
               {del ? (
-                <AiFillDelete size={25} className="" />
+                <AiFillDelete
+                  size={25}
+                  onClick={() => deletePost({ id: post?.id })}
+                  className=""
+                />
               ) : (
                 <FaCodePullRequest
                   key={"request"}
@@ -117,7 +121,6 @@ const PostCard = ({ post, del }) => {
                 color: "#0070FF",
               }}
             >
-              {console.log(post)}
               {post?.user?.toString().slice(0, 1)?.toUpperCase()}
             </Avatar>
           }

@@ -39,6 +39,7 @@ export const createUser = async (req, res) => {
       return res.json({
         status: 500,
         message: "internal server error",
+        error: error.message,
       });
     }
   } else if (
@@ -65,6 +66,7 @@ export const loginUser = async (req, res) => {
     return res.json({
       status: 400,
       message: "user not found, please register to login",
+      error: error.message,
     });
   }
   const token = jwt.sign({ result }, process.env.SECRET, { expiresIn: "7d" });
@@ -85,17 +87,35 @@ export const loginUser = async (req, res) => {
     return res.json({
       status: 400,
       message: "Invalid credentials",
+      error: error.message,
     });
   }
 };
 
-export const testController = async (req, res) => {
+// export const testController = async (req, res) => {
+//   try {
+//     res.json({ status: 200, message: "authenticated User" });
+//   } catch (error) {
+//     res.json({
+//       status: "Server Error",
+//       message: "Error in authenticationg User",
+//     });
+//   }
+// };
+
+export const getCollageNames = async (req, res) => {
+  const { name } = req.params;
+  console.log(name);
   try {
-    res.json({ status: 200, message: "authenticated User" });
+    const response = await fetch(
+      `https://api.geeksforgeeks.org/api/institutes/${name}/institute`
+    );
+    const data = await response.json();
+    res.json(data);
   } catch (error) {
-    res.json({
-      status: "Server Error",
-      message: "Error in authenticationg User",
-    });
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };

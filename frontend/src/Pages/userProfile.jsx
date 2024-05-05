@@ -9,7 +9,7 @@ const UserProfile = () => {
   const [selectedTab, setSelectedTab] = useState({
     current: "myProfile",
   });
-  console.log(initValues);
+
   useEffect(() => {
     setInitValues({
       name: auth?.user?.name,

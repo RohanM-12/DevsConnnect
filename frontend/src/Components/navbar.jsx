@@ -1,6 +1,6 @@
 import { Avatar, Dropdown, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { PiUserCircleFill, PiUserListBold } from "react-icons/pi";
+import { PiUserListBold } from "react-icons/pi";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../contexts/authContext";
 import { RiLoginCircleLine } from "react-icons/ri";
@@ -11,14 +11,14 @@ const Navbar = () => {
   const items = [
     {
       label: "Profile",
-      icon: <PiUserListBold size={20} className="my-3" />,
+      icon: <PiUserListBold size={25} className="my-3" />,
       onClick: () => {
         navigate("/myProfile");
       },
     },
     {
       label: "LogOut",
-      icon: <RiLogoutCircleLine size={20} className="my-3" />,
+      icon: <RiLogoutCircleLine size={25} className="my-3" />,
       onClick: () => {
         navigate("/login");
         setAuth({ user: null, token: "" });
