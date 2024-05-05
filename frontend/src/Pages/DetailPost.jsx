@@ -65,7 +65,7 @@ const DetailPost = () => {
             <div className="flex items-center mb-4">
               <span className="font-semibold mr-2">Technologies Used:</span>
               <div>
-                {postData?.technologiesUsed.split(",").map((item, i) => (
+                {postData?.technologiesUsed?.map((item, i) => (
                   <Tag
                     key={i}
                     color={

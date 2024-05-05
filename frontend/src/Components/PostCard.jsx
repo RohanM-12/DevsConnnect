@@ -8,7 +8,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
-import RequestContribModal from "./Routes/RequestContribModal";
+import RequestContribModal from "./RequestContribModal";
 const { Meta } = Card;
 const PostCard = ({ post, del, deletePost }) => {
   const [liked, setLiked] = useState();
@@ -41,7 +41,7 @@ const PostCard = ({ post, del, deletePost }) => {
   };
 
   return (
-    <div key={post?.id} className="mb-5 flex justify-center lg:ml-1 mx-8">
+    <div key={post?.id} className="mb-5 flex justify-center lg:ml-1 mx-2">
       <Card
         className="shadow-md hover:drop-shadow-xl  "
         style={{ width: 320 }}
@@ -136,7 +136,6 @@ const PostCard = ({ post, del, deletePost }) => {
               </span>
             </>
           }
-          {...console.log(post?.technologiesUsed)}
           description={post?.technologiesUsed?.map((item, i) => (
             <Tag key={i} color={"blue"} className="p-1  m-1">
               <span className="text-blue-600 font-semibold">
@@ -147,7 +146,7 @@ const PostCard = ({ post, del, deletePost }) => {
         />
       </Card>
       <div>
-        <RequestContribModal open={open} setOpen={setOpen} />
+        <RequestContribModal open={open} setOpen={setOpen} postData={post} />
       </div>
     </div>
   );

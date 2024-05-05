@@ -30,7 +30,7 @@ const ExplorePosts = () => {
         </h1>
       </div>
       {posts?.length > 0 ? (
-        <div className=" grid xl:grid-cols-4 md:grid-cols-2  sm:grid-cols-1 sm:items-center mt-10 p-3 ">
+        <div className=" grid xl:grid-cols-4 md:grid-cols-3  sm:grid-cols-1 sm:items-center mt-10 p-3 ">
           {posts?.map((item) => (
             <PostCard key={item.id} post={item} />
           ))}
