@@ -2,14 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Spinner from "../Components/Spinner";
+import { useAuth } from "../contexts/authContext";
 
 const ExplorePosts = () => {
   const [posts, setPosts] = useState([]);
-
+  const [auth] = useAuth();
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get("/api/v1/posts/getPosts");
+        const { data } = await axios.get("/api/v1/posts/getPosts", {
+          params: { currentUserId: auth?.user?.id },
+        });
         console.log(data);
         if (data?.status === 200) {
           setPosts(data?.data);

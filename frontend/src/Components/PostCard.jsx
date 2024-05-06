@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { EllipsisOutlined } from "@ant-design/icons";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { BiDetail } from "react-icons/bi";
 import { Avatar, Badge, Card, Tag } from "antd";

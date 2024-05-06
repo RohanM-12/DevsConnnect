@@ -8,7 +8,7 @@ export const createContributionRequest = async (req, res) => {
       data: {
         requesterId: req.body.requesterId,
         postId: req.body.postId,
-        status: "requested",
+        status: req.body.status,
         interestDescription: req.body.interestDescription,
         wishesToWorkOn: req.body.wishesToWorkOn,
       },
@@ -65,6 +65,60 @@ export const updateContributionRequestStatus = async (req, res) => {
     res.json({
       status: 500,
       message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+export const getContributionRequests = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    console.log(userId);
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(userId),
+      },
+
+      include: {
+        posts: {
+          orderBy: {
+            created_at: "asc",
+          },
+          include: {
+            contributionRequests: {
+              include: {
+                requester: {
+                  select: {
+                    name: true, // Only select the name field
+                    collegeName: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Extract the contribution requests from the user's posts
+    const contributionRequests = user.posts.flatMap((post) =>
+      post.contributionRequests.map((request) => ({
+        ...request,
+        requesterName: request.requester.name,
+        collegeName: request.requester.collegeName,
+        postName: post.name,
+      }))
+    );
+    // console.log(contributionRequests);
+    res.json({ status: 200, message: "success", data: contributionRequests });
+  } catch (error) {
+    return res.json({
+      status: 500,
+      message: "Internal server Error",
       error: error.message,
     });
   }

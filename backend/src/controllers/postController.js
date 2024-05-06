@@ -91,10 +91,12 @@ export const getAllPosts = async (req, res) => {
       });
     }
 
+    const { currentUserId } = req.query;
     const postsData = await prisma.posts.findMany({
       orderBy: {
         created_at: "asc",
       },
+
       include: {
         user: {
           select: {
@@ -103,7 +105,7 @@ export const getAllPosts = async (req, res) => {
         },
       },
     });
-
+    console.log(postsData);
     const moddifiedPostData = postsData?.map((post) => ({
       ...post,
       user: post.user.name,

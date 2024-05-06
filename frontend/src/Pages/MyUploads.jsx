@@ -41,7 +41,9 @@ const MyUploads = () => {
       <div>
         <AdminMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
-      <div className="text-3xl font-semibold text-center mt-10">My Uploads</div>
+      {/* <div className="text-2xl font-bold text-center mt-10 text-blue-600">
+        My Uploads
+      </div> */}
       <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mt-10 p-8  ">
         {posts ? (
           posts?.map((post) => (

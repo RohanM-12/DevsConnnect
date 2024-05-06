@@ -24,7 +24,7 @@ const RequestContribModal = ({ open, setOpen, postData }) => {
           {
             requesterId: auth?.user?.id,
             postId: postData?.id,
-            status: "requested",
+            status: "Requested",
             interestDescription: values?.why,
             wishesToWorkOn: values?.specificFeature,
           }
