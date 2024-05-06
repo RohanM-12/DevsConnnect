@@ -7,21 +7,20 @@ import { useAuth } from "../contexts/authContext";
 const ExplorePosts = () => {
   const [posts, setPosts] = useState([]);
   const [auth] = useAuth();
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data } = await axios.get("/api/v1/posts/getPosts", {
-          params: { currentUserId: auth?.user?.id },
-        });
-        console.log(data);
-        if (data?.status === 200) {
-          setPosts(data?.data);
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    }
+  async function fetchData() {
+    try {
+      const { data } = await axios.get("/api/v1/posts/getPosts", {
+        params: { currentUserId: auth?.user?.id },
+      });
 
+      if (data?.status === 200) {
+        setPosts(data?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  }
+  useEffect(() => {
     fetchData();
   }, []);
 

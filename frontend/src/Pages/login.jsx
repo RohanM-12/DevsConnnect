@@ -15,7 +15,8 @@ const Login = () => {
         params: values,
       });
       console.log(result);
-      if (result.data.status === 200) {
+      // toast.success();
+      if (result?.data?.status === 200) {
         setAuth({ user: result?.data?.userData, token: result?.data?.token });
         localStorage.setItem(
           "auth",
@@ -24,7 +25,7 @@ const Login = () => {
             token: result?.data?.token,
           })
         );
-        toast.success(result?.data.message);
+        toast.success(result?.data?.message);
         navigate("/");
       } else {
         toast.error(result?.data?.message);

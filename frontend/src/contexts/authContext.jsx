@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
     if (tempAuth) {
       console.log(tempAuth);
       setAuth({
-        user: tempAuth.user,
-        token: tempAuth.token,
+        user: tempAuth?.user,
+        token: tempAuth?.token,
       });
     }
   }, []);

@@ -34,9 +34,7 @@ const RequestContribModal = ({ open, setOpen, postData }) => {
           setConfirmLoading(false);
           form.resetFields();
           data?.status == 200
-            ? toast.success(
-                "Contribution Request created , Please check your profile to confirm about status 🔃"
-              )
+            ? toast.success("Contribution Request created ... 🔃")
             : toast.error(data?.message);
         }, 1000);
       } catch (error) {

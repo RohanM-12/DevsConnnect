@@ -8,6 +8,7 @@ import { useAuth } from "../contexts/authContext";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import RequestContribModal from "./RequestContribModal";
+import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 const { Meta } = Card;
 const PostCard = ({ post, del, deletePost }) => {
   const [liked, setLiked] = useState();
@@ -91,12 +92,25 @@ const PostCard = ({ post, del, deletePost }) => {
                   onClick={() => deletePost({ id: post?.id })}
                   className=""
                 />
-              ) : (
+              ) : post?.contributionRequests == null ||
+                post?.contributionRequests?.length < 1 ? (
                 <FaCodePullRequest
                   key={"request"}
                   size={18}
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    if (!auth?.user) {
+                      return navigate("/login");
+                    }
+                    setOpen(true);
+                  }}
                 />
+              ) : (
+                <>
+                  <IoCheckmarkDoneCircleSharp
+                    className="text-green-500"
+                    size={25}
+                  />
+                </>
               )}
             </span>
           </>,
