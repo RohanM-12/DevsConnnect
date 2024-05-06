@@ -11,14 +11,18 @@ import RequestContribModal from "./RequestContribModal";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 const { Meta } = Card;
 const PostCard = ({ post, del, deletePost }) => {
+  // console.log(post);
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
   const [open, setOpen] = useState(false);
+  const [ContributionRequestStatus, setContributionRequestStatus] = useState(
+    (post?.contributionRequests && post?.contributionRequests?.length) || 0
+  );
   const navigate = useNavigate();
   useEffect(() => {
     setLiked(post?.likes?.includes(auth?.user?.id?.toString()));
-  }, [post?.likes, auth?.user?.id]);
+  }, [post?.likes, auth?.user?.id, post]);
 
   const handleLike = async (id, status) => {
     if (status == 1 && auth?.user) {
@@ -92,8 +96,7 @@ const PostCard = ({ post, del, deletePost }) => {
                   onClick={() => deletePost({ id: post?.id })}
                   className=""
                 />
-              ) : post?.contributionRequests == null ||
-                post?.contributionRequests?.length < 1 ? (
+              ) : !ContributionRequestStatus ? (
                 <FaCodePullRequest
                   key={"request"}
                   size={18}
@@ -159,7 +162,12 @@ const PostCard = ({ post, del, deletePost }) => {
         />
       </Card>
       <div>
-        <RequestContribModal open={open} setOpen={setOpen} postData={post} />
+        <RequestContribModal
+          open={open}
+          setOpen={setOpen}
+          postData={post}
+          setContributionRequestStatus={setContributionRequestStatus}
+        />
       </div>
     </div>
   );

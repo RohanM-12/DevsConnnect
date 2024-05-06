@@ -5,7 +5,12 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/authContext";
 import toast from "react-hot-toast";
 
-const RequestContribModal = ({ open, setOpen, postData }) => {
+const RequestContribModal = ({
+  open,
+  setOpen,
+  postData,
+  setContributionRequestStatus,
+}) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
   const [form] = Form.useForm();
@@ -33,9 +38,12 @@ const RequestContribModal = ({ open, setOpen, postData }) => {
           setOpen(false);
           setConfirmLoading(false);
           form.resetFields();
-          data?.status == 200
-            ? toast.success("Contribution Request created ... 🔃")
-            : toast.error(data?.message);
+          if (data?.status == 200) {
+            toast.success("Contribution Request created ... 🔃");
+            setContributionRequestStatus(1);
+          } else {
+            toast.error(data?.message);
+          }
         }, 1000);
       } catch (error) {
         console.log(error);

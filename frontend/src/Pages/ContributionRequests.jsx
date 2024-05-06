@@ -9,6 +9,8 @@ import Meta from "antd/es/card/Meta";
 import toast from "react-hot-toast";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
+import LoadingCard from "../Components/loadingCard";
 const ContributionRequests = () => {
   const [auth] = useAuth();
   const [requests, setRequests] = useState([]);
@@ -62,8 +64,8 @@ const ContributionRequests = () => {
       </div>
       <div className="flex justify-center">
         <div className="p-5 drop-shadow-2xl w-2/3">
-          <div className="p-10 drop-shadow-xl shadow-lg border-gray-200 border-2">
-            {requests ? (
+          <div className="p-10 drop-shadow-xl shadow-lg border-gray-200 border-2 rounded-lg">
+            {requests?.length > 0 ? (
               <List
                 itemLayout="horizontal"
                 dataSource={requests}
@@ -94,17 +96,17 @@ const ContributionRequests = () => {
                         </>
                       }
                       title={
-                        <a
+                        <Link
                           className="font-bold"
-                          href={`/detailsPost/${item?.postId}`}
+                          to={`/detailsPost/${item?.postId}`}
                         >
                           Title : {item?.postName}
                           <span className="float-end font-semibold mr-3">
                             {item?.created_at
-                              ? dayjs(item?.created_at).format("YYYY-MM-DD")
+                              ? dayjs(item?.created_at).format("DD-MM-YYYY")
                               : "N/A"}
                           </span>
-                        </a>
+                        </Link>
                       }
                       description={
                         <span className="text-black">
@@ -163,18 +165,7 @@ const ContributionRequests = () => {
                 )}
               />
             ) : (
-              <span className="flex justify-center">
-                {/* <Spinner Size={50} /> */}
-                <Skeleton loading={true} avatar active>
-                  <Meta
-                    avatar={
-                      <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />
-                    }
-                    title="Card title"
-                    description="This is the description"
-                  />
-                </Skeleton>
-              </span>
+              <LoadingCard />
             )}
           </div>
         </div>

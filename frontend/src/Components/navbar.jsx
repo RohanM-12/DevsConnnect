@@ -43,7 +43,7 @@ const Navbar = () => {
             className="text-white text-lg flex items-center font-bold mb-0 "
           >
             <BsFilePost size={35} />
-            <span className="hidden lg:flex">Explore</span>
+            {/* <span className="hidden lg:flex"></span> */}
           </Link>
           {!auth.user && (
             <Link

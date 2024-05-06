@@ -123,3 +123,47 @@ export const getContributionRequests = async (req, res) => {
     });
   }
 };
+
+export const getMyContributionRequests = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const contributionRequests = await prisma.contributionRequests.findMany({
+      where: { requesterId: parseInt(userId) },
+      include: {
+        post: {
+          include: {
+            user: { select: { name: true } },
+          },
+        },
+      },
+      orderBy: { created_at: "desc" },
+    });
+
+    const modifiedContributionRequests = contributionRequests.map(
+      (request) => ({
+        id: request.id,
+        status: request.status,
+        interestDescription: request.interestDescription,
+        wishesToWorkOn: request.wishesToWorkOn,
+        created_at: request.created_at,
+        post: {
+          id: request.post.id,
+          name: request.post.name,
+          description: request.post.description,
+          user: request.post.user.name,
+        },
+      })
+    );
+    res.json({
+      status: 500,
+      message: "success",
+      data: modifiedContributionRequests,
+    });
+  } catch (error) {
+    res.json({
+      status: 500,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};

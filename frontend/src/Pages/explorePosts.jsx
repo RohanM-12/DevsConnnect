@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/authContext";
 
 const ExplorePosts = () => {
   const [posts, setPosts] = useState([]);
+  const [ContributionRequestStatus, setContributionRequestStatus] = useState();
   const [auth] = useAuth();
   async function fetchData() {
     try {
