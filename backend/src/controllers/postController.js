@@ -2,7 +2,7 @@ import prisma from "../db/db.config.js";
 
 export const createPost = async (req, res) => {
   try {
-    console.log(req.body);
+    console.log("Create post", req.body);
     const {
       Title,
       Description,
@@ -12,8 +12,11 @@ export const createPost = async (req, res) => {
       technologiesUsed,
       userId,
     } = req.body;
-    console.log(req.file);
+    console.log("FIle", req.file);
+    console.log("array", req.body.technologiesUsed);
 
+    const uploadedFile = req.file;
+    const thumbnailImgURL = `/uploads/${uploadedFile.filename}`;
     const uploadResult = await prisma.posts.create({
       data: {
         name: Title,
@@ -21,8 +24,8 @@ export const createPost = async (req, res) => {
         gitHubLink: gitHubLink,
         deployedLink: deployedLink,
         demoVideoLink: demoVideoLink,
-        technologiesUsed: technologiesUsed,
-        thumbnailImgURL: "path",
+        technologiesUsed: [...technologiesUsed.split(",")],
+        thumbnailImgURL: thumbnailImgURL,
         userId: parseInt(userId),
       },
     });

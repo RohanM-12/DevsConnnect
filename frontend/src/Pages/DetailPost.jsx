@@ -44,7 +44,11 @@ const DetailPost = () => {
           <div className="flex justify-center ">
             <Image
               width={600}
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src={`http://localhost:5000${
+                postData?.thumbnailImgURL?.split("/")?.length > 1
+                  ? postData?.thumbnailImgURL
+                  : "/uploads/default.gif"
+              }`}
             />
           </div>
           <div className="p-2">

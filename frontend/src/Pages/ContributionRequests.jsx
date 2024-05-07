@@ -4,8 +4,6 @@ import { Avatar, List, Radio, Skeleton } from "antd";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
 import dayjs from "dayjs";
-import Spinner from "../Components/Spinner";
-import Meta from "antd/es/card/Meta";
 import toast from "react-hot-toast";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import { IoMdCloseCircleOutline } from "react-icons/io";
@@ -74,7 +72,6 @@ const ContributionRequests = () => {
                     <List.Item.Meta
                       avatar={
                         <>
-                          {" "}
                           <Avatar
                             className="mx-1 font-bold"
                             style={{

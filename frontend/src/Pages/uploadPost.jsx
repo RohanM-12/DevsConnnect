@@ -8,11 +8,6 @@ import urlRegex from "url-regex";
 import { DiGithubBadge } from "react-icons/di";
 import { useAuth } from "../contexts/authContext";
 const UploadPost = () => {
-  const getBase64 = (img, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(img);
-  };
   const [techList, setTechList] = useState([]);
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -38,13 +33,23 @@ const UploadPost = () => {
         });
         return;
       }
-      const result = await axios.post("/api/v1/posts/createPost", {
-        ...values,
-        thumbnailImage,
-        technologiesUsed: techList,
-        userId: auth?.user?.id,
+      const formData = new FormData();
+      formData.append("Title", values.Title);
+      formData.append("Description", values.Description);
+      formData.append("gitHubLink", values.gitHubLink);
+      formData.append("deployedLink", values.deployedLink || "");
+      formData.append("demoVideoLink", values.demoVideoLink || "");
+      formData.append("technologiesUsed", techList);
+      formData.append("userId", auth?.user?.id);
+      formData.append("thumbnailImage", thumbnailImage);
+
+      const result = await axios.post("/api/v1/posts/createPost", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      if (result?.data?.status == 200) {
+
+      if (result?.data?.status === 200) {
         toast.success("Post uploaded");
       }
     } catch (error) {
@@ -52,17 +57,6 @@ const UploadPost = () => {
     }
   };
 
-  const handleChange = (info) => {
-    if (info.file.status === "uploading") {
-      return;
-    }
-    if (info.file.status === "done") {
-      // getBase64(info.file.originFileObj, (url) => {
-      setThumbnailImage(info.file);
-      console.log(thumbnailImage);
-      // });
-    }
-  };
   const handleImageUpload = (file) => {
     console.log(file);
     setThumbnailImage(file);

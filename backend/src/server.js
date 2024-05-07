@@ -2,9 +2,12 @@ import express from "express";
 import "dotenv/config";
 import chalk from "chalk";
 import cors from "cors";
-import extraRoutes from "./routes/extras.routes.js";
+import serveStatic from "serve-static";
+import path from "path";
+import { fileURLToPath } from "url";
 const app = express();
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
@@ -16,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
+app.use("/uploads", serveStatic(path.join(__dirname, "routes", "uploads")));
 
 // app.use(extraRoutes);
 

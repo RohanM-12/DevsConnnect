@@ -10,11 +10,11 @@ const Register = () => {
   const onFinish = async (values) => {
     try {
       const res = await axios.post("/api/v1/user/register", values);
-      if (res.data.status == 200) {
-        toast.success(res.data.message);
+      if (res?.data?.status == 200) {
+        toast.success(res?.data?.message);
         navigate("/login");
       } else {
-        toast.error(res.data.message);
+        toast.error(res?.data?.message);
       }
     } catch (error) {
       console.log(error);

@@ -39,7 +39,7 @@ const UserProfile = () => {
         "/api/v1/posts/contributionRequests/getMyRequests",
         { params: { userId: auth?.user?.id } }
       );
-      console.log(data?.data);
+
       setRequests(data?.data);
     } catch (error) {
       console.log(error.message);

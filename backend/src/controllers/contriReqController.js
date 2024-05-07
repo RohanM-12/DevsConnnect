@@ -3,7 +3,6 @@ import prisma from "../db/db.config.js";
 export const createContributionRequest = async (req, res) => {
   try {
     console.log(req.body);
-
     const result = await prisma.contributionRequests.create({
       data: {
         requesterId: req.body.requesterId,
@@ -31,7 +30,6 @@ export const createContributionRequest = async (req, res) => {
 export const updateContributionRequestStatus = async (req, res) => {
   try {
     const { id, requesterId, postId, status } = req.body;
-
     const doesExist = await prisma.contributionRequests.findUnique({
       where: {
         id: id,
@@ -73,7 +71,7 @@ export const updateContributionRequestStatus = async (req, res) => {
 export const getContributionRequests = async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log(userId);
+    // console.log(userId);
     const user = await prisma.user.findUnique({
       where: {
         id: parseInt(userId),
@@ -89,7 +87,7 @@ export const getContributionRequests = async (req, res) => {
               include: {
                 requester: {
                   select: {
-                    name: true, // Only select the name field
+                    name: true,
                     collegeName: true,
                   },
                 },
@@ -104,7 +102,6 @@ export const getContributionRequests = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Extract the contribution requests from the user's posts
     const contributionRequests = user.posts.flatMap((post) =>
       post.contributionRequests.map((request) => ({
         ...request,

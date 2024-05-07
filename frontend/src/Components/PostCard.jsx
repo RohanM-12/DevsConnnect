@@ -11,7 +11,7 @@ import RequestContribModal from "./RequestContribModal";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 const { Meta } = Card;
 const PostCard = ({ post, del, deletePost }) => {
-  // console.log(post);
+  console.log(post);
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
@@ -22,7 +22,7 @@ const PostCard = ({ post, del, deletePost }) => {
   const navigate = useNavigate();
   useEffect(() => {
     setLiked(post?.likes?.includes(auth?.user?.id?.toString()));
-  }, [post?.likes, auth?.user?.id, post]);
+  }, [post?.likes, auth, post]);
 
   const handleLike = async (id, status) => {
     if (status == 1 && auth?.user) {
@@ -52,9 +52,15 @@ const PostCard = ({ post, del, deletePost }) => {
         cover={
           <>
             <img
-              alt="example"
               className="hover:cursor-pointer"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src={`http://localhost:5000${
+                post?.thumbnailImgURL?.split("/")?.length > 1
+                  ? post.thumbnailImgURL
+                  : "/uploads/default.gif"
+              }`}
+              loading="lazy"
+              alt="Thumbnail"
               onClick={() => navigate(`/detailsPost/${post?.id}`)}
             />
           </>
@@ -152,10 +158,11 @@ const PostCard = ({ post, del, deletePost }) => {
               </span>
             </>
           }
+          {...console.log(post?.technologiesUsed)}
           description={post?.technologiesUsed?.map((item, i) => (
             <Tag key={i} color={"blue"} className="p-1  m-1">
               <span className="text-blue-600 font-semibold">
-                {item?.toUpperCase()}{" "}
+                {item?.toUpperCase()}
               </span>
             </Tag>
           ))}
