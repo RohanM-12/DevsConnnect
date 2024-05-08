@@ -12,16 +12,21 @@ import LoadingCard from "../Components/loadingCard";
 const ContributionRequests = () => {
   const [auth] = useAuth();
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState({
     current: "contributionRequests",
   });
   const fetchData = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         "/api/v1/posts/contributionRequests/getRequests",
         { params: { userId: auth?.user?.id } }
       );
       console.log(data?.data);
+      if (data) {
+        setLoading(false);
+      }
       setRequests(data?.data);
     } catch (error) {
       console.log(error.message);
@@ -115,7 +120,6 @@ const ContributionRequests = () => {
                             {item?.interestDescription}
                             {item.status === "Requested" ? (
                               <Radio.Group
-                                // value={item?.status}
                                 onChange={(val) =>
                                   handleStatusChange(val.target.value, item)
                                 }
@@ -162,8 +166,11 @@ const ContributionRequests = () => {
                 )}
               />
             ) : (
-              <LoadingCard />
+              <p className="text-center text-gray-500 font-semibold text-lg">
+                NO REQUESTS
+              </p>
             )}
+            {loading && <LoadingCard />}
           </div>
         </div>
       </div>

@@ -7,14 +7,17 @@ import Spinner from "../Components/Spinner";
 import showDeleteConfirm from "../Components/confirmModal";
 import toast from "react-hot-toast";
 const MyUploads = () => {
+  const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState({
     current: "myPosts",
   });
   const fetchData = async () => {
+    setLoading(true);
     const { data } = await axios.get("/api/v1/posts/getPosts", {
       params: { userId: auth?.user?.id },
     });
     setPosts(data?.data);
+    setLoading(false);
   };
   const [auth, setAuth] = useAuth();
   const [posts, setPosts] = useState([]);
@@ -45,7 +48,8 @@ const MyUploads = () => {
         My Uploads
       </div> */}
       <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mt-10 p-8  ">
-        {posts ? (
+        {posts &&
+          posts.length > 0 &&
           posts?.map((post) => (
             <PostCard
               post={post}
@@ -53,13 +57,13 @@ const MyUploads = () => {
               del={post?.id}
               deletePost={deletePost}
             />
-          ))
-        ) : (
-          <div className="flex justify-center items-center h-screen">
-            <Spinner Size={50} />
-          </div>
-        )}
+          ))}
       </div>
+      {loading && (
+        <div className="flex justify-center items-center mt-48">
+          <Spinner Size={70} />
+        </div>
+      )}
     </>
   );
 };

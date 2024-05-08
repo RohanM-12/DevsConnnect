@@ -14,8 +14,15 @@ app.get("/", (req, res) => {
   return res.send("hello /");
 });
 
+const corsOptions = {
+  origin: "*", // Allow requests from all origins
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all HTTP methods
+  allowedHeaders: "Content-Type,Authorization", // Allow these headers
+  credentials: true, // Allow sending cookies across origins
+};
+
 // middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
@@ -40,6 +47,7 @@ app.use("/uploads", serveStatic(path.join(__dirname, "routes", "uploads")));
 // app files
 
 import appRoute from "./routes/index.js";
+import { METHODS } from "http";
 app.use(appRoute);
 
 app.listen(PORT, () =>

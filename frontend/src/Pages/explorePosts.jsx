@@ -40,7 +40,7 @@ const ExplorePosts = () => {
         </div>
       ) : (
         <div className="flex justify-center items-center h-screen">
-          <Spinner Size={50} />
+          <Spinner Size={60} />
         </div>
       )}
     </>
