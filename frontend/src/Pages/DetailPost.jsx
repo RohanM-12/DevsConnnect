@@ -60,6 +60,10 @@ const DetailPost = () => {
               <span className="font-semibold mr-2">Uploaded By:</span>
               <span>{postData?.user}</span>
             </div>
+            <div className="flex items-center mb-4">
+              <span className="font-semibold mr-2">College Name:</span>
+              <span>{postData?.collegeName}</span>
+            </div>
             <div className="flex  justify-start items-center">
               <FaHeart key={"liked"} className="text-red-600 mx-2 " size={23} />
               {" : "}

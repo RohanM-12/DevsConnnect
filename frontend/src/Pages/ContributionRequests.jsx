@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminMenu from "../Components/AdminMenu";
-import { Avatar, List, Radio, Skeleton } from "antd";
+import { Avatar, List, Radio } from "antd";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -155,7 +155,7 @@ const ContributionRequests = () => {
                           </p>
                           <p>
                             <span className="font-semibold text-gray-600">
-                              Wishes to work on :{" "}
+                              Wishes to work on :
                             </span>
                             {item?.wishesToWorkOn}
                           </p>

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Spinner from "../Components/Spinner";
 import { useAuth } from "../contexts/authContext";
+import { Input } from "antd";
+import { FaSearch } from "react-icons/fa";
 
 const ExplorePosts = () => {
   const [posts, setPosts] = useState([]);
@@ -31,6 +33,14 @@ const ExplorePosts = () => {
         <h1 className="text-center text-2xl font-bold font-sans text-black drop-shadow-2xl">
           <span className="">All Posts </span>
         </h1>
+      </div>
+      <div>
+        <div className="border-t-2 my-5"></div>
+
+        <div className="w-80 mx-10">
+          <Input placeholder="Search Post" suffix={<FaSearch />} size="large" />
+        </div>
+        <div className="border-t-2 my-5"></div>
       </div>
       {posts?.length > 0 ? (
         <div className=" grid xl:grid-cols-4 md:grid-cols-3  sm:grid-cols-1 sm:items-center mt-10 p-3 ">

@@ -155,6 +155,7 @@ export const getSinglePost = async (req, res) => {
         user: {
           select: {
             name: true,
+            collegeName: true,
           },
         },
       },
@@ -163,7 +164,11 @@ export const getSinglePost = async (req, res) => {
     return res.json({
       status: 200,
       message: "success",
-      data: { ...postData, user: postData.user.name },
+      data: {
+        ...postData,
+        user: postData.user.name,
+        collegeName: postData.user.collegeName,
+      },
     });
   } catch (error) {
     return res.json({

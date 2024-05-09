@@ -55,7 +55,7 @@ const UserProfile = () => {
         <AdminMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
       <div className="mt-5 p-5">
-        <div className="grid grid-cols-2">
+        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
           <div className="col-span-1 p-5 shadow-lg ">
             <div className="p-5 shadow-lg border-gray-200 border-2  rounded-lg">
               <Form

@@ -54,7 +54,7 @@ const MyUploads = () => {
             <PostCard
               post={post}
               key={post?.id}
-              del={post?.id}
+              isMyProfile={post?.id}
               deletePost={deletePost}
             />
           ))}

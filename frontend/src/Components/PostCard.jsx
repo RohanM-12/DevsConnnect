@@ -9,8 +9,9 @@ import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import RequestContribModal from "./RequestContribModal";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
+import { RiUserFollowLine } from "react-icons/ri";
 const { Meta } = Card;
-const PostCard = ({ post, del, deletePost }) => {
+const PostCard = ({ post, isMyProfile, deletePost }) => {
   console.log(post);
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
@@ -96,7 +97,7 @@ const PostCard = ({ post, del, deletePost }) => {
           </>,
           <>
             <span className="flex justify-center items-center mt-0 text-blue-500 ">
-              {del ? (
+              {isMyProfile ? (
                 <AiFillDelete
                   size={25}
                   onClick={() => deletePost({ id: post?.id })}
@@ -148,14 +149,32 @@ const PostCard = ({ post, del, deletePost }) => {
           }
           title={
             <>
-              <span
-                className="hover:cursor-pointer hover:text-blue-300"
-                onClick={() => navigate(`/detailsPost/${post?.id}`)}
-              >
-                {post?.name?.length > 20
-                  ? post?.name?.substring(0, 20) + "..."
-                  : post?.name}
-              </span>
+              <div>
+                <span
+                  className="hover:cursor-pointer hover:text-blue-300"
+                  onClick={() => navigate(`/detailsPost/${post?.id}`)}
+                >
+                  {post?.name?.length > 20
+                    ? post?.name?.substring(0, 20) + "..."
+                    : post?.name}
+                </span>
+                {!isMyProfile && (
+                  <span className="float-end">
+                    <button
+                      style={{
+                        fontSize: "12px",
+                        paddingInline: "10px",
+                      }}
+                      className=" flex justify-center items-center bg-gray-700 text-white rounded-xl p-0.5"
+                    >
+                      <span>
+                        <RiUserFollowLine size={15} className="mr-1" />
+                      </span>
+                      Follow
+                    </button>
+                  </span>
+                )}
+              </div>
             </>
           }
           {...console.log(post?.technologiesUsed)}
