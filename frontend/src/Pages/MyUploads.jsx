@@ -6,8 +6,11 @@ import PostCard from "../Components/PostCard";
 import Spinner from "../Components/Spinner";
 import showDeleteConfirm from "../Components/confirmModal";
 import toast from "react-hot-toast";
+import { Button, Empty } from "antd";
+import { useNavigate } from "react-router-dom";
 const MyUploads = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState({
     current: "myPosts",
   });
@@ -21,7 +24,6 @@ const MyUploads = () => {
   };
   const [auth, setAuth] = useAuth();
   const [posts, setPosts] = useState([]);
-
   const deletePost = async ({ id }) => {
     try {
       const status = await showDeleteConfirm();
@@ -63,6 +65,28 @@ const MyUploads = () => {
         <div className="flex justify-center items-center mt-48">
           <Spinner Size={70} />
         </div>
+      )}
+      {posts?.length < 1 && (
+        <>
+          <div className="flex justify-center">
+            <div className="p-10 border-2 rounded-md w-1/2 shadow-md">
+              <span>
+                <Empty description={""} />
+              </span>
+              <div className="text-center text-gray-500 text-lg font-semibold">
+                YOU HAVE NOT UPLOADED ANYTHING YET
+              </div>
+              <div className="flex justify-center p-5">
+                <Button
+                  onClick={() => navigate("/createPost")}
+                  className="text-blue-500 border-blue-500 hover:bg-blue-600"
+                >
+                  Upload Now
+                </Button>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </>
   );

@@ -30,7 +30,7 @@ const ExplorePosts = () => {
   return (
     <>
       <div>
-        <h1 className="text-center text-2xl font-bold font-sans text-black drop-shadow-2xl">
+        <h1 className="text-center text-xl font-semibold font-sans text-black drop-shadow-2xl">
           <span className="">All Posts </span>
         </h1>
       </div>

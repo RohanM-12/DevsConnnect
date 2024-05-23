@@ -11,6 +11,7 @@ import LoadingCard from "../Components/loadingCard";
 const UserProfile = () => {
   const [auth, setAuth] = useAuth();
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [initValues, setInitValues] = useState({});
   const [selectedTab, setSelectedTab] = useState({
     current: "myProfile",
@@ -35,12 +36,14 @@ const UserProfile = () => {
   };
   const fetchData = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         "/api/v1/posts/contributionRequests/getMyRequests",
         { params: { userId: auth?.user?.id } }
       );
 
       setRequests(data?.data);
+      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -85,7 +88,7 @@ const UserProfile = () => {
                 <Form.Item className="p-5 flex justify-center ">
                   <Button
                     htmlType="submit"
-                    className=" p-5 flex items-center font-bold"
+                    className=" p-3 flex items-center font-semibold"
                     type="primary"
                     onClick={(e) => onFinish(e.target.values)}
                   >
@@ -122,7 +125,7 @@ const UserProfile = () => {
                             <>
                               <Link to={`/detailsPost/${item?.post?.id}`}>
                                 {item?.post?.name}
-                              </Link>{" "}
+                              </Link>
                               <span className="float-end">
                                 {item?.created_at
                                   ? dayjs(item?.created_at)?.format(
@@ -139,8 +142,7 @@ const UserProfile = () => {
                               </p>
                               <p>
                                 <span className="font-semibold">
-                                  {" "}
-                                  Uploaded by:{" "}
+                                  Uploaded by:
                                 </span>
                                 {item?.post?.user}
                                 <span className="float-end">
@@ -172,8 +174,12 @@ const UserProfile = () => {
                     )}
                   />
                 </>
-              ) : (
+              ) : loading ? (
                 <LoadingCard />
+              ) : (
+                <div className="text-center text-gray-500 text-md font-semibold">
+                  NO REQUESTS
+                </div>
               )}
             </div>
           </div>

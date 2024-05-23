@@ -9,10 +9,9 @@ import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import RequestContribModal from "./RequestContribModal";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
-import { RiUserFollowLine } from "react-icons/ri";
+
 const { Meta } = Card;
 const PostCard = ({ post, isMyProfile, deletePost }) => {
-  console.log(post);
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
@@ -158,7 +157,7 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
                     ? post?.name?.substring(0, 20) + "..."
                     : post?.name}
                 </span>
-                {!isMyProfile && (
+                {/* {!isMyProfile && (
                   <span className="float-end">
                     <button
                       style={{
@@ -173,7 +172,7 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
                       Follow
                     </button>
                   </span>
-                )}
+                )} */}
               </div>
             </>
           }

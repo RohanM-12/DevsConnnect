@@ -13,6 +13,7 @@ import UserProfile from "./Pages/userProfile";
 import PrivateRoute from "./Components/Routes/Private";
 import MyUploads from "./Pages/MyUploads";
 import ContributionRequests from "./Pages/ContributionRequests";
+import Connect from "./Pages/Connect";
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
                 path="/contributionRequests"
                 element={<ContributionRequests />}
               />
+            </Route>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/connect" element={<Connect />} />
             </Route>
             <Route path="/explorePosts" element={<ExplorePosts />} />
             <Route path="/detailsPost/:id" element={<DetailPost />} />

@@ -62,7 +62,7 @@ const ContributionRequests = () => {
       <div>
         <AdminMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
-      <div className="text-center pb-5 p-10 text-2xl font-semibold ">
+      <div className="text-center pb-5 p-10 text-xl font-semibold ">
         Contribution Requests on your posts
       </div>
       <div className="flex justify-center">
@@ -166,7 +166,7 @@ const ContributionRequests = () => {
                 )}
               />
             ) : (
-              <p className="text-center text-gray-500 font-semibold text-lg">
+              <p className="text-center text-gray-500 font-semibold text-md">
                 NO REQUESTS
               </p>
             )}

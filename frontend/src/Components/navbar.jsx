@@ -46,24 +46,26 @@ const Navbar = () => {
             {/* <BsFilePost size={35} /> */}
             <FaCompass size={35} />
             <p
-              style={{ fontSize: "13px" }}
-              className="text-white ml-1 font-bold hidden lg:flex "
+              style={{ fontSize: "12px" }}
+              className="text-white ml-1 hidden lg:flex "
             >
               Explore
             </p>
           </Link>
-          <Link
-            className="text-white text-lg flex items-center font-bold mb-0 "
-            to={"/network"}
-          >
-            <IoIosPeople className="text-white" size={35} />
-            <p
-              style={{ fontSize: "13px" }}
-              className="text-white ml-1 font-bold hidden lg:flex "
+          {auth?.user && (
+            <Link
+              className="text-white text-lg flex items-center font-bold mb-0 "
+              to={"/network"}
             >
-              Connect
-            </p>
-          </Link>
+              <IoIosPeople className="text-white" size={35} />
+              <p
+                style={{ fontSize: "12px" }}
+                className="text-white ml-1 font-bold hidden lg:flex "
+              >
+                Connect
+              </p>
+            </Link>
+          )}
           {!auth?.user && (
             <Link
               to="/login"
