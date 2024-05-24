@@ -9,7 +9,6 @@ import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import RequestContribModal from "./RequestContribModal";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
-
 const { Meta } = Card;
 const PostCard = ({ post, isMyProfile, deletePost }) => {
   const [liked, setLiked] = useState();
@@ -19,6 +18,7 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
   const [ContributionRequestStatus, setContributionRequestStatus] = useState(
     (post?.contributionRequests && post?.contributionRequests?.length) || 0
   );
+  console.log(post);
   const navigate = useNavigate();
   useEffect(() => {
     setLiked(post?.likes?.includes(auth?.user?.id?.toString()));

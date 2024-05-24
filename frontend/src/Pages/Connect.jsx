@@ -1,5 +1,5 @@
 const Connect = () => {
-  return <div>Connect</div>;
+  return <div>Connect with People you know</div>;
 };
 
 export default Connect;

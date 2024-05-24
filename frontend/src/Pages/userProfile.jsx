@@ -145,11 +145,13 @@ const UserProfile = () => {
                                   Uploaded by:
                                 </span>
                                 {item?.post?.user}
-                                <span className="float-end">
+                                <span className="float-end ">
                                   <Button
                                     className={`text-white font-bold w-32 hover:bg-slate-600 bg-${
                                       item?.status == "Accepted"
                                         ? "green"
+                                        : item?.status == "Requested"
+                                        ? "blue"
                                         : "red"
                                     }-400 `}
                                   >

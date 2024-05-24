@@ -5,6 +5,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getFilteredPosts,
   getSinglePost,
   likePost,
   removeLikePost,
@@ -28,5 +29,6 @@ postRoutes.get("/getPost/:id", getSinglePost);
 postRoutes.delete("/deletePost/:id", deletePost);
 postRoutes.put("/addLike", likePost);
 postRoutes.put("/removeLike", removeLikePost);
+postRoutes.get("/getFilteredPosts", getFilteredPosts);
 
 export default postRoutes;

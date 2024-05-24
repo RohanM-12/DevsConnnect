@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Spinner from "../Components/Spinner";
 import { useAuth } from "../contexts/authContext";
@@ -10,6 +10,8 @@ const ExplorePosts = () => {
   const [posts, setPosts] = useState([]);
   const [ContributionRequestStatus, setContributionRequestStatus] = useState();
   const [auth] = useAuth();
+  const [loading, setLoading] = useState(false);
+  const debounceTimeout = useRef(null);
   async function fetchData() {
     try {
       const { data } = await axios.get("/api/v1/posts/getPosts", {
@@ -27,6 +29,28 @@ const ExplorePosts = () => {
     fetchData();
   }, []);
 
+  const handleSearch = async (value) => {
+    try {
+      console.log(value);
+      setLoading(true);
+      const { data } = await axios.get("/api/v1/posts/getFilteredPosts", {
+        params: { keyword: value },
+      });
+      setPosts(data?.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSearchDebounced = (value) => {
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+    debounceTimeout.current = setTimeout(() => {
+      handleSearch(value);
+    }, 500);
+  };
+
   return (
     <>
       <div>
@@ -38,7 +62,12 @@ const ExplorePosts = () => {
         <div className="border-t-2 my-5"></div>
 
         <div className="w-80 mx-10">
-          <Input placeholder="Search Post" suffix={<FaSearch />} size="large" />
+          <Input
+            onChange={(e) => handleSearchDebounced(e.target.value)}
+            placeholder="Search Post"
+            suffix={<FaSearch />}
+            size="large"
+          />
         </div>
         <div className="border-t-2 my-5"></div>
       </div>
@@ -49,6 +78,9 @@ const ExplorePosts = () => {
           ))}
         </div>
       ) : (
+        <></>
+      )}
+      {loading && (
         <div className="flex justify-center items-center h-screen">
           <Spinner Size={60} />
         </div>

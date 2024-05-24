@@ -7,10 +7,17 @@ import { FaGithub, FaHeart } from "react-icons/fa";
 import { MdOndemandVideo } from "react-icons/md";
 import { VscLiveShare } from "react-icons/vsc";
 import { FaCodePullRequest } from "react-icons/fa6";
+import RequestContribModal from "../Components/RequestContribModal";
+import { useAuth } from "../contexts/authContext";
 const DetailPost = () => {
   const { id } = useParams();
+  const [auth] = useAuth();
   const [postData, setPostData] = useState(null);
+  const [ContributionRequestStatus, setContributionRequestStatus] = useState(1);
+  const [open, setOpen] = useState(false);
   console.log(postData);
+  console.log(postData);
+
   const tagColors = [
     "red",
     "orange",
@@ -26,9 +33,14 @@ const DetailPost = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`/api/v1/posts/getPost/${id}`);
+        const { data } = await axios.get(`/api/v1/posts/getPost/${id}`, {
+          params: { currentUserId: auth?.user?.id },
+        });
         if (data?.status === 200) {
-          setPostData(data.data);
+          setPostData(data?.data[0]);
+          setContributionRequestStatus(
+            data.data[0].contributionRequests?.length
+          );
         }
       } catch (error) {
         console.log(error);
@@ -119,11 +131,17 @@ const DetailPost = () => {
             <div className="  grid grid-cols-4">
               <div></div>
               <button
+                disabled={postData?.contributionRequests?.length}
                 className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-56 "
                 type="button"
+                onClick={() => setOpen(true)}
               >
                 <span className="flex justify-center items-center ">
-                  <FaCodePullRequest className="mx-2" /> Request to contribute
+                  <FaCodePullRequest className="mx-2" />
+                  {postData?.contributionRequests[0]?.status ||
+                  ContributionRequestStatus
+                    ? postData?.contributionRequests[0]?.status
+                    : "Request to contribute"}
                 </span>
               </button>
               <div></div>
@@ -135,6 +153,14 @@ const DetailPost = () => {
           <Spinner Size={50} />
         </div>
       )}
+      <div>
+        <RequestContribModal
+          open={open}
+          setOpen={setOpen}
+          postData={postData}
+          setContributionRequestStatus={setContributionRequestStatus}
+        />
+      </div>
     </div>
   );
 };

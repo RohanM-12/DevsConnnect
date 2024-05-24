@@ -161,15 +161,40 @@ export const getSinglePost = async (req, res) => {
       },
     });
 
-    return res.json({
-      status: 200,
-      message: "success",
-      data: {
-        ...postData,
-        user: postData.user.name,
-        collegeName: postData.user.collegeName,
-      },
-    });
+    const { currentUserId } = req.query;
+    if (currentUserId) {
+      const postsData = await prisma.posts.findMany({
+        orderBy: { created_at: "asc" },
+        include: {
+          user: { select: { name: true } },
+          contributionRequests: {
+            where: { requesterId: parseInt(currentUserId) },
+            select: { status: true },
+          },
+        },
+      });
+      console.log(postsData);
+      const moddifiedPostData = postsData?.map((post) => ({
+        ...post,
+        user: post.user.name,
+      }));
+
+      return res.json({
+        status: 200,
+        message: "success",
+        data: moddifiedPostData,
+      });
+    } else {
+      return res.json({
+        status: 200,
+        message: "success",
+        data: {
+          ...postData,
+          user: postData.user.name,
+          collegeName: postData.user.collegeName,
+        },
+      });
+    }
   } catch (error) {
     return res.json({
       status: 500,
@@ -286,6 +311,51 @@ export const removeLikePost = async (req, res) => {
     res.json({
       status: 500,
       message: "error while liking a post",
+      error: error.message,
+    });
+  }
+};
+
+export const getFilteredPosts = async (req, res) => {
+  try {
+    const { keyword } = req.query;
+
+    const posts = await prisma.posts.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: keyword,
+              mode: "insensitive", // This makes the search case-insensitive
+            },
+          },
+          {
+            description: {
+              contains: keyword,
+              mode: "insensitive",
+            },
+          },
+          {
+            technologiesUsed: {
+              has: keyword.toUpperCase(),
+            },
+          },
+        ],
+      },
+      include: {
+        contributionRequests: true, // Include contribution requests if needed\
+        user: true,
+      },
+    });
+    const modifiedPosts = posts.map((post) => ({
+      ...post,
+      user: post.user.name,
+    }));
+    res.json({ status: 200, data: modifiedPosts, message: "success" });
+  } catch (error) {
+    res.json({
+      status: 500,
+      message: "Internal server error, cannot search",
       error: error.message,
     });
   }

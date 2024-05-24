@@ -55,7 +55,7 @@ const Navbar = () => {
           {auth?.user && (
             <Link
               className="text-white text-lg flex items-center font-bold mb-0 "
-              to={"/network"}
+              to={"/connect"}
             >
               <IoIosPeople className="text-white" size={35} />
               <p

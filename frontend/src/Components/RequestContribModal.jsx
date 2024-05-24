@@ -12,7 +12,6 @@ const RequestContribModal = ({
   setContributionRequestStatus,
 }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
   const [form] = Form.useForm();
   const [auth] = useAuth();
   console.log(auth?.user?.id);
@@ -87,7 +86,7 @@ const RequestContribModal = ({
             ]}
           >
             <TextArea
-              placeholder="why are you interested in this project ?"
+              placeholder="Show your interest towards contributing, it'll increase chances of getting approved "
               rows={5}
             />
           </Form.Item>
