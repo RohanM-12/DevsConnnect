@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOptions = {
-  origin: "http://localhost:3000", // Allow requests from all origins
+  origin: "*", // Allow requests from all origins
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all HTTP methods
   allowedHeaders: "Content-Type,Authorization", // Allow these headers
   credentials: true, // Allow sending cookies across origins
