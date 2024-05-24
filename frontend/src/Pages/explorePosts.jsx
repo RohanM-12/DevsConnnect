@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PostCard from "../Components/PostCard";
 import Spinner from "../Components/Spinner";
 import { useAuth } from "../contexts/authContext";
-import { Input } from "antd";
+import { Empty, Input } from "antd";
 import { FaSearch } from "react-icons/fa";
 
 const ExplorePosts = () => {
@@ -25,6 +25,7 @@ const ExplorePosts = () => {
       console.error("Error fetching posts:", error);
     }
   }
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -60,16 +61,18 @@ const ExplorePosts = () => {
       </div>
       <div>
         <div className="border-t-2 my-5"></div>
-
-        <div className="w-80 mx-10">
-          <Input
-            onChange={(e) => handleSearchDebounced(e.target.value)}
-            placeholder="Search Post"
-            suffix={<FaSearch />}
-            size="large"
-          />
+        <div className="flex justify-start">
+          <div className="w-80 mx-10">
+            <Input
+              onChange={(e) => handleSearchDebounced(e.target.value)}
+              placeholder="Search Post with Title/Tech Stack"
+              suffix={<FaSearch />}
+              size="large"
+            />
+          </div>
         </div>
-        <div className="border-t-2 my-5"></div>
+
+        {/* <div className="border-t-2 my-5"></div> */}
       </div>
       {posts?.length > 0 ? (
         <div className=" grid xl:grid-cols-4 md:grid-cols-3  sm:grid-cols-1 sm:items-center mt-10 p-3 ">
@@ -78,7 +81,11 @@ const ExplorePosts = () => {
           ))}
         </div>
       ) : (
-        <></>
+        <>
+          <div className="p-10  flex justify-center">
+            <Empty description={"No Results Found"} />
+          </div>
+        </>
       )}
       {loading && (
         <div className="flex justify-center items-center h-screen">

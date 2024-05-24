@@ -8,10 +8,8 @@ import { MdOndemandVideo } from "react-icons/md";
 import { VscLiveShare } from "react-icons/vsc";
 import { FaCodePullRequest } from "react-icons/fa6";
 import RequestContribModal from "../Components/RequestContribModal";
-import { useAuth } from "../contexts/authContext";
 const DetailPost = () => {
   const { id } = useParams();
-  const [auth] = useAuth();
   const [postData, setPostData] = useState(null);
   const [ContributionRequestStatus, setContributionRequestStatus] = useState(1);
   const [open, setOpen] = useState(false);
@@ -34,10 +32,10 @@ const DetailPost = () => {
     async function fetchData() {
       try {
         const { data } = await axios.get(`/api/v1/posts/getPost/${id}`, {
-          params: { currentUserId: auth?.user?.id },
+          //  params: { currentUserId: auth?.user?.id },
         });
         if (data?.status === 200) {
-          setPostData(data?.data[0]);
+          setPostData(data?.data);
           setContributionRequestStatus(
             data.data[0].contributionRequests?.length
           );
@@ -50,85 +48,90 @@ const DetailPost = () => {
   }, [id]);
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container  mt-8 shadow-md ">
       {postData ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="flex justify-center ">
-            <Image
-              width={600}
-              src={`http://localhost:5000${
-                postData?.thumbnailImgURL?.split("/")?.length > 1
-                  ? postData?.thumbnailImgURL
-                  : "/uploads/default.gif"
-              }`}
-            />
-          </div>
-          <div className="p-2">
-            <h2 className="text-2xl font-bold mb-4">
-              <> {postData?.name}</>
-            </h2>
-            <p className="text-gray-600 mb-4">{postData?.description}</p>
-            <div className="flex items-center mb-4">
-              <span className="font-semibold mr-2">Uploaded By:</span>
-              <span>{postData?.user}</span>
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="flex justify-center ">
+              <Image
+                width={600}
+                src={`http://localhost:5000${
+                  postData?.thumbnailImgURL?.split("/")?.length > 1
+                    ? postData?.thumbnailImgURL
+                    : "/uploads/default.gif"
+                }`}
+              />
             </div>
-            <div className="flex items-center mb-4">
-              <span className="font-semibold mr-2">College Name:</span>
-              <span>{postData?.collegeName}</span>
-            </div>
-            <div className="flex  justify-start items-center">
-              <FaHeart key={"liked"} className="text-red-600 mx-2 " size={23} />
-              {" : "}
-              <span className="mx-2">{postData?.likes?.length}</span>
-            </div>
-
-            <div className="flex items-center mb-4">
-              <span className="font-semibold mr-2">Technologies Used:</span>
-              <div>
-                {postData?.technologiesUsed?.map((item, i) => (
-                  <Tag
-                    key={i}
-                    color={
-                      tagColors[Math.floor(Math.random() * tagColors.length)]
-                    }
-                    className="m-1 p-2"
-                  >
-                    {item.toUpperCase().trim()}
-                  </Tag>
-                ))}
+            <div className="p-2">
+              <h2 className="text-2xl font-bold mb-4">
+                <> {postData?.name}</>
+              </h2>
+              <p className="text-gray-600 mb-4">{postData?.description}</p>
+              <div className="flex items-center mb-4">
+                <span className="font-semibold mr-2">Uploaded By:</span>
+                <span>{postData?.user}</span>
               </div>
-            </div>
-            <div className=" flex items-center justify-center p-10">
-              <Link to={postData?.gitHubLink}>
-                <Tag
-                  className="p-3 w-36 "
-                  icon={<FaGithub size={20} />}
-                  color="black"
-                >
-                  GITHUB
-                </Tag>
-              </Link>
-              <Link to={postData?.demoVideoLink}>
-                <Tag
-                  className="p-3 w-36"
-                  icon={<MdOndemandVideo size={20} />}
-                  color="#55acee"
-                >
-                  DEMO VIDEO
-                </Tag>
-              </Link>
+              <div className="flex items-center mb-4">
+                <span className="font-semibold mr-2">College Name:</span>
+                <span>{postData?.collegeName}</span>
+              </div>
+              <div className="flex  justify-start items-center">
+                <FaHeart
+                  key={"liked"}
+                  className="text-red-600 mx-2 "
+                  size={23}
+                />
+                {" : "}
+                <span className="mx-2">{postData?.likes?.length}</span>
+              </div>
 
-              <Link to={postData?.deployedLink}>
-                <Tag
-                  className="p-3 w-36"
-                  icon={<VscLiveShare size={20} />}
-                  color="indigo"
-                >
-                  DEPLOYED URL
-                </Tag>
-              </Link>
-            </div>
-            <div className="  grid grid-cols-4">
+              <div className="flex items-center mb-4">
+                <span className="font-semibold mr-2">Technologies Used:</span>
+                <div>
+                  {postData?.technologiesUsed?.map((item, i) => (
+                    <Tag
+                      key={i}
+                      color={
+                        tagColors[Math.floor(Math.random() * tagColors.length)]
+                      }
+                      className="m-1 p-2"
+                    >
+                      {item.toUpperCase().trim()}
+                    </Tag>
+                  ))}
+                </div>
+              </div>
+              <div className=" flex items-center justify-center p-10">
+                <Link to={postData?.gitHubLink}>
+                  <Tag
+                    className="p-3 w-36 "
+                    icon={<FaGithub size={20} />}
+                    color="black"
+                  >
+                    GITHUB
+                  </Tag>
+                </Link>
+                <Link to={postData?.demoVideoLink}>
+                  <Tag
+                    className="p-3 w-36"
+                    icon={<MdOndemandVideo size={20} />}
+                    color="#55acee"
+                  >
+                    DEMO VIDEO
+                  </Tag>
+                </Link>
+
+                <Link to={postData?.deployedLink}>
+                  <Tag
+                    className="p-3 w-36"
+                    icon={<VscLiveShare size={20} />}
+                    color="indigo"
+                  >
+                    DEPLOYED URL
+                  </Tag>
+                </Link>
+              </div>
+              {/* <div className="  grid grid-cols-4">
               <div></div>
               <button
                 disabled={postData?.contributionRequests?.length}
@@ -145,9 +148,10 @@ const DetailPost = () => {
                 </span>
               </button>
               <div></div>
+            </div> */}
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div className="flex justify-center items-center h-screen">
           <Spinner Size={50} />

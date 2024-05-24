@@ -5,6 +5,7 @@ import cors from "cors";
 import serveStatic from "serve-static";
 import path from "path";
 import { fileURLToPath } from "url";
+import axios from "axios";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOptions = {
-  origin: "*", // Allow requests from all origins
+  origin: "http://localhost:3000", // Allow requests from all origins
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all HTTP methods
   allowedHeaders: "Content-Type,Authorization", // Allow these headers
   credentials: true, // Allow sending cookies across origins
@@ -27,6 +28,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
 app.use("/uploads", serveStatic(path.join(__dirname, "routes", "uploads")));
+
+// GitHub API endpoint
+// app.get("/github-repo/:owner/:repo", async (req, res) => {
+//   const { owner, repo } = req.params;
+//   try {
+//     const response = await axios.get(
+//       `https://api.github.com/repos/${owner}/${repo}`
+//     );
+//     res.json(response.data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
 
 // app.use(extraRoutes);
 
