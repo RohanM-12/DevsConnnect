@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Image, Tag } from "antd";
+import { Avatar, Image, List, Tag } from "antd";
 import axios from "axios";
 import Spinner from "../Components/Spinner";
 import { FaGithub, FaHeart } from "react-icons/fa";
 import { MdOndemandVideo } from "react-icons/md";
 import { VscLiveShare } from "react-icons/vsc";
-import { FaCodePullRequest } from "react-icons/fa6";
 import RequestContribModal from "../Components/RequestContribModal";
+import { FaCodeMerge } from "react-icons/fa6";
+import dayjs from "dayjs";
 const DetailPost = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState(null);
+  console.log(postData);
   const [ContributionRequestStatus, setContributionRequestStatus] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -46,7 +48,7 @@ const DetailPost = () => {
   }, [id]);
 
   return (
-    <div className="container  mt-8 shadow-md ">
+    <div className="container  mt-8 ">
       {postData ? (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -79,8 +81,8 @@ const DetailPost = () => {
                   className="text-red-600 mx-2 "
                   size={23}
                 />
-                {" : "}
-                <span className="mx-2">{postData?.likes?.length}</span>
+                {/* {" : "} */}
+                <span className="mx-1">{postData?.likes?.length}</span>
               </div>
 
               <div className="flex items-center mb-4">
@@ -129,25 +131,91 @@ const DetailPost = () => {
                   </Tag>
                 </Link>
               </div>
-              {/* <div className="  grid grid-cols-4">
-              <div></div>
-              <button
-                disabled={postData?.contributionRequests?.length}
-                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-56 "
-                type="button"
-                onClick={() => setOpen(true)}
-              >
-                <span className="flex justify-center items-center ">
-                  <FaCodePullRequest className="mx-2" />
-                  {postData?.contributionRequests[0]?.status ||
-                  ContributionRequestStatus
-                    ? postData?.contributionRequests[0]?.status
-                    : "Request to contribute"}
-                </span>
-              </button>
-              <div></div>
-            </div> */}
             </div>
+          </div>
+          <div className="p-10 border-2 m-10 rounded-lg shadow-lg">
+            {/* <div className="p-10 border-2 mx-10 rounded-xl shadow-sm"> */}
+            <div className=" drop-shadow-xl mb-5 text-lg font-semibold text-gray-700 flex justify-center items-center">
+              <FaCodeMerge className="mx-4 text-green-300 " size={25} />
+              <span>CONTRIBUTORS OF {postData?.name?.toUpperCase()} </span>
+            </div>
+
+            <div>
+              <List
+                itemLayout="vertical"
+                dataSource={postData.contributionRequests}
+                size="small"
+                renderItem={(item, index) => (
+                  <div className="flex justify-center">
+                    <List.Item className="py-0  w-4/5">
+                      <List.Item.Meta
+                        avatar={
+                          <>
+                            <Avatar
+                              className="drop-shadow-2xl"
+                              style={{
+                                backgroundColor: "#fde3cf",
+                                color: "#f56a00",
+                                padding: "20px",
+                              }}
+                            >
+                              {item?.requester?.name
+                                ?.slice(0, 1)
+                                ?.toUpperCase()}
+                            </Avatar>
+                            <div className="flex justify-center">
+                              <div className="border-r-2 mt-1 border-blue-300 p-5 px-0 "></div>
+                            </div>
+                          </>
+                        }
+                        title={
+                          <>
+                            <p>
+                              <span>{item?.requester?.name} </span>
+                              <span className="lg:float-right md:float-right sm:float-none sm:mx-2">
+                                {dayjs(item?.created_at)?.format("DD-MM-YYYY")}
+                              </span>
+                            </p>
+                          </>
+                        }
+                        description={
+                          <>
+                            <div>
+                              <p>
+                                {" "}
+                                <span className="font-semibold">
+                                  Worked On :{" "}
+                                </span>
+                                {item?.wishesToWorkOn}
+                              </p>
+                              <p>
+                                <span className="font-semibold">
+                                  College name :{" "}
+                                </span>
+                                {item?.requester?.collegeName}
+                              </p>
+                            </div>
+                          </>
+                        }
+                      />
+                    </List.Item>
+                  </div>
+                )}
+              />
+            </div>
+
+            {/* {postData?.contributionRequests?.map((item) => (
+                <>
+                  <div>
+                    <Avatar
+                      style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+                    >
+                      {item?.requester?.name?.slice(0, 1)?.toUpperCase()}
+                    </Avatar>
+                  </div>
+                </>
+              ))} */}
+            {/* </div> */}
           </div>
         </>
       ) : (

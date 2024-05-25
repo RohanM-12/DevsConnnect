@@ -8,6 +8,8 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import LoadingCard from "../Components/loadingCard";
+import { IoGitPullRequestSharp } from "react-icons/io5";
+import { ImProfile } from "react-icons/im";
 const UserProfile = () => {
   const [auth, setAuth] = useAuth();
   const [requests, setRequests] = useState([]);
@@ -60,6 +62,10 @@ const UserProfile = () => {
       <div className="mt-5 p-5">
         <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
           <div className="col-span-1 p-5 shadow-lg ">
+            <div className="text-center font-semibold text-gray-500 text-md mb-4 flex justify-center items-center">
+              <ImProfile size={26} className="text-blue-400 mx-2" />
+              <div>UPDATE PROFILE DETAILS</div>
+            </div>
             <div className="p-5 shadow-lg border-gray-200 border-2  rounded-lg">
               <Form
                 layout="vertical"
@@ -99,6 +105,10 @@ const UserProfile = () => {
             </div>
           </div>
           <div className="col-span-1 p-5 shadow-lg">
+            <div className="text-center font-semibold text-gray-500 text-md mb-4 flex justify-center items-center ">
+              <IoGitPullRequestSharp size={26} className="text-blue-400 mx-2" />
+              <div> MY REQUESTS TO CONTRIBUTE</div>
+            </div>
             <div className="p-5 drop-shadow-xl shadow-lg border-gray-200 border-2  rounded-lg">
               {requests?.length > 0 ? (
                 <>

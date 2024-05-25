@@ -9,6 +9,7 @@ import { CheckCircleTwoTone } from "@ant-design/icons";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import LoadingCard from "../Components/loadingCard";
+import { FaClipboardList } from "react-icons/fa6";
 const ContributionRequests = () => {
   const [auth] = useAuth();
   const [requests, setRequests] = useState([]);
@@ -62,8 +63,9 @@ const ContributionRequests = () => {
       <div>
         <AdminMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
-      <div className="text-center pb-5 p-10 text-xl font-semibold ">
-        Contribution Requests on your posts
+      <div className="flex justify-center items-center text-center pb-5 p-10 text-xl font-semibold text-gray-500">
+        <FaClipboardList className="mx-2 text-blue-400" size={26} />
+        <span>CONTRIBUTION REQUESTS ON YOUR POSTS </span>
       </div>
       <div className="flex justify-center">
         <div className="p-5 drop-shadow-2xl w-2/3">

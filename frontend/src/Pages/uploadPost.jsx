@@ -80,7 +80,7 @@ const UploadPost = () => {
   return (
     <>
       <div className="mt-6">
-        <h1 className="text-center text-3xl text-blue-500 font-bold font-mono">
+        <h1 className="text-center text-xl text-gray-900 font-bold font-mono">
           UPLOAD POST
         </h1>
         <div className=" mt-4 w-screen border-t-2 border-gray-400"></div>

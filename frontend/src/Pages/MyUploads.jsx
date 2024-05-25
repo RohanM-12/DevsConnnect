@@ -8,6 +8,7 @@ import showDeleteConfirm from "../Components/confirmModal";
 import toast from "react-hot-toast";
 import { Button, Empty } from "antd";
 import { useNavigate } from "react-router-dom";
+import { BsPostcardHeartFill } from "react-icons/bs";
 const MyUploads = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -46,10 +47,11 @@ const MyUploads = () => {
       <div>
         <AdminMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
-      {/* <div className="text-2xl font-bold text-center mt-10 text-blue-600">
-        My Uploads
-      </div> */}
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mt-10 p-8  ">
+      <div className=" flex justify-center items-center text-lg font-semibold text-center mt-10 text-gray-500">
+        <BsPostcardHeartFill size={26} className="mx-2 text-blue-400" />
+        <span>MY UPLOADS </span>
+      </div>
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  p-8 border-2 m-5 rounded-xl shadow-md ">
         {posts &&
           posts.length > 0 &&
           posts?.map((post) => (

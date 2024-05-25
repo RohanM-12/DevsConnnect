@@ -47,7 +47,7 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
   return (
     <div key={post?.id} className="mb-5 flex justify-center lg:ml-1 mx-2">
       <Card
-        className="shadow-md hover:drop-shadow-xl  "
+        className="shadow-xl hover:drop-shadow-2xl  "
         style={{ width: 320 }}
         cover={
           <>

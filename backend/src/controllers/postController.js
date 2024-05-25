@@ -158,6 +158,12 @@ export const getSinglePost = async (req, res) => {
             collegeName: true,
           },
         },
+        contributionRequests: {
+          where: { postId: parseInt(pid), status: "Accepted" },
+          include: {
+            requester: { select: { name: true, collegeName: true } },
+          },
+        },
       },
     });
 
@@ -173,7 +179,7 @@ export const getSinglePost = async (req, res) => {
           },
         },
       });
-      console.log(postsData);
+
       const moddifiedPostData = postsData?.map((post) => ({
         ...post,
         user: post.user.name,
