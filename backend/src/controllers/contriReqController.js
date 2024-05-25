@@ -89,6 +89,7 @@ export const getContributionRequests = async (req, res) => {
                   select: {
                     name: true,
                     collegeName: true,
+                    email: true,
                   },
                 },
               },

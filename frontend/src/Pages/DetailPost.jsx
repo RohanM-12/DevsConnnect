@@ -13,8 +13,6 @@ const DetailPost = () => {
   const [postData, setPostData] = useState(null);
   const [ContributionRequestStatus, setContributionRequestStatus] = useState(1);
   const [open, setOpen] = useState(false);
-  console.log(postData);
-  console.log(postData);
 
   const tagColors = [
     "red",

@@ -109,17 +109,26 @@ const UserProfile = () => {
                       <List.Item>
                         <List.Item.Meta
                           avatar={
-                            <Avatar
-                              className="mx-1 font-bold"
-                              style={{
-                                color: "#f56a00",
-                                backgroundColor: "#fde3cf",
-                                padding: "20px",
-                                fontSize: "20px",
-                              }}
-                            >
-                              {item?.post?.user?.substring(0, 1)?.toUpperCase()}
-                            </Avatar>
+                            <>
+                              <Avatar
+                                className="mx-1 font-bold"
+                                style={{
+                                  color: "#f56a00",
+                                  backgroundColor: "#fde3cf",
+                                  padding: "20px",
+                                  fontSize: "20px",
+                                }}
+                              >
+                                {item?.post?.user
+                                  ?.substring(0, 1)
+                                  ?.toUpperCase()}
+                              </Avatar>
+                              <div className=" flex justify-center mt-2 ">
+                                <span className="text-blue-500 font-semibold  ">
+                                  {item?.post?.user?.split(" ")[0]}
+                                </span>
+                              </div>
+                            </>
                           }
                           title={
                             <>

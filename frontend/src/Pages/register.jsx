@@ -13,8 +13,8 @@ const Register = () => {
       if (res?.data?.status == 200) {
         toast.success(res?.data?.message);
         navigate("/login");
-      } else {
-        toast.error(res?.data?.message);
+      } else if (res?.data?.code == "P2002") {
+        toast.error("Mobile number already registered");
       }
     } catch (error) {
       console.log(error);
@@ -46,10 +46,10 @@ const Register = () => {
                 <Input className="p-2" placeholder=" Enter Email" />
               </Form.Item>
               <Form.Item
-                name={"registrationNo"}
+                name={"mobileNo"}
                 rules={[{ required: true, message: "Please provide input" }]}
               >
-                <Input className="p-2" placeholder=" Enter Registration No" />
+                <Input className="p-2" placeholder=" Enter Mobile No" />
               </Form.Item>
               <Form.Item
                 name={"name"}

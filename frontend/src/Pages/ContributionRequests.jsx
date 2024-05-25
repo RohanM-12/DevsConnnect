@@ -90,9 +90,9 @@ const ContributionRequests = () => {
                               ?.substring(0, 1)
                               ?.toUpperCase()}
                           </Avatar>
-                          <div className="flext justify-center text-center mt-2 mr-5 ">
-                            <span className="text-blue-500 font-bold ">
-                              {item?.requester?.name?.substring(0, 10)}
+                          <div className=" flex justify-center mt-2 ">
+                            <span className="text-blue-500 font-semibold  ">
+                              {item?.requester?.name?.split(" ")[0]}
                             </span>
                           </div>
                         </>
@@ -113,7 +113,7 @@ const ContributionRequests = () => {
                       description={
                         <span className="text-black">
                           <p>
-                            <span className="font-semibold text-gray-600 ">
+                            <span className="font-semibold text-gray-900 ">
                               {"Requester's"} Interest :
                             </span>
 
@@ -148,16 +148,28 @@ const ContributionRequests = () => {
                             )}
                           </p>
                           <p>
-                            <span className="font-semibold text-gray-600 mr-2 ">
+                            <span className="font-semibold text-gray-900 mr-2 ">
+                              {"Requester's"} Full Name :
+                            </span>
+                            {item?.requester?.name}
+                          </p>
+                          <p>
+                            <span className="font-semibold text-gray-900 mr-2 ">
                               College Name :
                             </span>
                             {item?.collegeName}
                           </p>
                           <p>
-                            <span className="font-semibold text-gray-600">
+                            <span className="font-semibold text-gray-900">
                               Wishes to work on :
                             </span>
                             {item?.wishesToWorkOn}
+                          </p>
+                          <p>
+                            <span className="font-semibold text-gray-900">
+                              Contact me here {" : "}
+                            </span>
+                            {item?.requester?.email}
                           </p>
                         </span>
                       }

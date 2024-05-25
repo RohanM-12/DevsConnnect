@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 export const createUser = async (req, res) => {
-  const { registrationNo, name, password, email, collegeName } = req.body;
-  console.log(req.body);
+  const { mobileNo, name, password, email, collegeName } = req.body;
+
   const result = await prisma.User.findUnique({
     where: {
       email: email,
@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
       const createResult = await prisma.User.create({
         data: {
-          registrationNo: registrationNo,
+          mobileNo: mobileNo,
           name: name,
           password: hashedPassword,
           email: email,
@@ -40,12 +40,10 @@ export const createUser = async (req, res) => {
         status: 500,
         message: "internal server error",
         error: error.message,
+        code: error.code,
       });
     }
-  } else if (
-    result?.registrationNo === registrationNo ||
-    result.email === email
-  ) {
+  } else if (result?.mobileNo === mobileNo || result.email === email) {
     return res.json({
       status: "400",
       message: "User already registered with this email or registration no ",
