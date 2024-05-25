@@ -8,7 +8,8 @@
     "start": "node server.js --host 0.0.0.0",
     "server": "nodemon src/server.js --host 0.0.0.0",
     "client": "npm run dev --prefix ../frontend",
-    "dev": " concurrently \" npm run server\" \"npm run client \""
+    "dev": " concurrently \" npm run server\" \"npm run client \"",
+    "build": "npm install --prefix ../frontend && npm run build --prefix ../frontend && npm install"
   },
   "author": "rohan",
   "license": "ISC",

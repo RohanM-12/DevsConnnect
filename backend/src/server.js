@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
 app.use("/uploads", serveStatic(path.join(__dirname, "routes", "uploads")));
-
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 // GitHub API endpoint
 // app.get("/github-repo/:owner/:repo", async (req, res) => {
 //   const { owner, repo } = req.params;
