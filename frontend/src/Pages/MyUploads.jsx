@@ -51,7 +51,7 @@ const MyUploads = () => {
         <BsPostcardHeartFill size={26} className="mx-2 text-blue-400" />
         <span>MY UPLOADS </span>
       </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  p-8 border-2 m-5 rounded-xl shadow-md ">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  p-8 border-2 m-1 rounded-xl shadow-md ">
         {posts &&
           posts.length > 0 &&
           posts?.map((post) => (

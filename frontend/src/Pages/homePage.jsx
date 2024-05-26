@@ -23,7 +23,7 @@ const HomePage = () => {
             </div>
 
             <span className=" text-3xl lg:text-5xl  md:text-3xl text-blue-600 drop-shadow-xl font-mono ">
-              DEVSCONNECT
+              DevsCONNECT
             </span>
           </span>
           <br />

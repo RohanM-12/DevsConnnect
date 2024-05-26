@@ -48,7 +48,7 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
     <div key={post?.id} className="mb-5 flex justify-center lg:ml-1 mx-2">
       <Card
         className="shadow-xl hover:drop-shadow-2xl  "
-        style={{ width: 320 }}
+        style={{ width: 300 }}
         cover={
           <>
             <img
@@ -178,10 +178,13 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
           }
           {...console.log(post?.technologiesUsed)}
           description={post?.technologiesUsed?.map((item, i) => (
-            <Tag key={i} color={"blue"} className="p-1  m-1">
-              <span className="text-blue-600 font-semibold">
-                {item?.toUpperCase()}
-              </span>
+            <Tag
+              style={{ fontSize: "11px" }}
+              key={i}
+              color={"gold"}
+              className="p-1 m-1"
+            >
+              <span className="text-gray-900 ">{item?.toUpperCase()}</span>
             </Tag>
           ))}
         />

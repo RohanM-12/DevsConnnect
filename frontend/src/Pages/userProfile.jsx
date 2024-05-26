@@ -161,7 +161,7 @@ const UserProfile = () => {
                               </p>
                               <p>
                                 <span className="font-semibold">
-                                  Uploaded by:
+                                  Uploaded by {" : "}
                                 </span>
                                 {item?.post?.user}
                                 <span className="float-end ">

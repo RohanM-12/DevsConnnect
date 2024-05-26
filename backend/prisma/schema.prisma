@@ -41,6 +41,7 @@ datasource db {
   postId Int
   status String
   interestDescription String
+  rating Int @default(0)
   wishesToWorkOn String
   created_at DateTime @default(now())
   requester User @relation(fields: [requesterId],references: [id])

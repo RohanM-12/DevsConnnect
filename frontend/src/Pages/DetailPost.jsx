@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Image, List, Tag } from "antd";
+import { Avatar, Image, List, Rate, Tag } from "antd";
 import axios from "axios";
 import Spinner from "../Components/Spinner";
 import { FaGithub, FaHeart } from "react-icons/fa";
@@ -81,7 +81,7 @@ const DetailPost = () => {
                   className="text-red-600 mx-2 "
                   size={23}
                 />
-                {/* {" : "} */}
+
                 <span className="mx-1">{postData?.likes?.length}</span>
               </div>
 
@@ -176,6 +176,14 @@ const DetailPost = () => {
                                 {dayjs(item?.created_at)?.format("DD-MM-YYYY")}
                               </span>
                             </p>
+                            <div>
+                              <span className=" flex items-center float-right p-3">
+                                <span className="text-gray-400 mr-1">
+                                  Rating :{" "}
+                                </span>
+                                <Rate disabled value={item?.rating} />
+                              </span>
+                            </div>
                           </>
                         }
                         description={

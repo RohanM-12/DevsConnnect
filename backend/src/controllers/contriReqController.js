@@ -2,7 +2,6 @@ import prisma from "../db/db.config.js";
 
 export const createContributionRequest = async (req, res) => {
   try {
-    console.log(req.body);
     const result = await prisma.contributionRequests.create({
       data: {
         requesterId: req.body.requesterId,
@@ -161,6 +160,29 @@ export const getMyContributionRequests = async (req, res) => {
     res.json({
       status: 500,
       message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+export const updateContributionRequestRating = async (req, res) => {
+  try {
+    const { reqId, value } = req.body;
+    const result = await prisma.contributionRequests.update({
+      where: { id: parseInt(reqId) },
+      data: {
+        rating: value,
+      },
+    });
+    res.json({
+      status: 200,
+      message: "success",
+      //  data: result,
+    });
+  } catch (error) {
+    res.json({
+      status: 200,
+      message: "Internal server error cannot update rating",
       error: error.message,
     });
   }

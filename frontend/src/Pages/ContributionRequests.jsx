@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminMenu from "../Components/AdminMenu";
-import { Avatar, List, Radio } from "antd";
+import { Avatar, List, Radio, Rate } from "antd";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -24,7 +24,6 @@ const ContributionRequests = () => {
         "/api/v1/posts/contributionRequests/getRequests",
         { params: { userId: auth?.user?.id } }
       );
-      console.log(data?.data);
       if (data) {
         setLoading(false);
       }
@@ -55,6 +54,26 @@ const ContributionRequests = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleRatingChange = async (value, reqId) => {
+    try {
+      const res = await axios.put(
+        "/api/v1/posts/ContributionRequests/updateRating",
+        { value, reqId }
+      );
+      if (res?.status == 200) {
+        setRequests((prevRequests) =>
+          prevRequests.map((request) =>
+            request.id === reqId ? { ...request, rating: value } : request
+          )
+        );
+
+        toast.success("Rating Updated");
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -92,9 +111,11 @@ const ContributionRequests = () => {
                               ?.substring(0, 1)
                               ?.toUpperCase()}
                           </Avatar>
-                          <div className=" flex justify-center mt-2 ">
-                            <span className="text-blue-500 font-semibold  ">
-                              {item?.requester?.name?.split(" ")[0]}
+                          <div className=" flex justify-center mt-2  ">
+                            <span className="text-orange-500 font-semibold  ">
+                              {item?.requester?.name
+                                ?.split(" ")[0]
+                                ?.toUpperCase()}
                             </span>
                           </div>
                         </>
@@ -141,10 +162,25 @@ const ContributionRequests = () => {
                                 </Radio.Button>
                               </Radio.Group>
                             ) : item.status === "Accepted" ? (
-                              <CheckCircleTwoTone
-                                className="float-end px-10 text-3xl"
-                                twoToneColor="#52c41a"
-                              />
+                              <>
+                                <div>
+                                  <CheckCircleTwoTone
+                                    className="float-end px-10 text-3xl"
+                                    twoToneColor="#52c41a"
+                                  />
+                                  <div className="float-end"></div>
+                                </div>
+                                <div className=" drop-shadow-2xl float-end">
+                                  <span>Rate Contribution : </span>
+                                  <Rate
+                                    onChange={(e) =>
+                                      handleRatingChange(e, item?.id)
+                                    }
+                                    value={item?.rating}
+                                    className="  ant-rate-star-primary"
+                                  />
+                                </div>
+                              </>
                             ) : (
                               <IoMdCloseCircleOutline className="float-end mr-9 text-4xl text-red-600" />
                             )}
