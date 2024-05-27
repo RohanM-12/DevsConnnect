@@ -140,15 +140,20 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
       >
         <Meta
           avatar={
-            <Avatar
-              className="font-bold"
-              style={{
-                backgroundColor: "#B9D9EB",
-                color: "#0070FF",
-              }}
-            >
-              {post?.user?.toString().slice(0, 1)?.toUpperCase()}
-            </Avatar>
+            <div>
+              <Avatar
+                className="font-bold "
+                style={{
+                  backgroundColor: "#B9D9EB",
+                  color: "#0070FF",
+                }}
+              >
+                {post?.user?.toString().slice(0, 1)?.toUpperCase()}
+              </Avatar>
+              {/* <div style={{ fontSize: "11px" }} className="text-blue-700">
+                {post.user.toString().split(" ")[0].toUpperCase()}
+              </div> */}
+            </div>
           }
           title={
             <>
@@ -183,12 +188,20 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
           {...console.log(post?.technologiesUsed)}
           description={post?.technologiesUsed?.map((item, i) => (
             <Tag
-              style={{ fontSize: "11px" }}
+              style={{
+                fontSize: "11px",
+
+                width: 70,
+                border: "solid 1px orange",
+              }}
               key={i}
-              color={"gold"}
-              className="p-1 m-1"
+              // color={"#E0F7FC"}
+              color="gold"
+              className="p-1 m-0.5 rounded-xl text-center  "
             >
-              <span className="text-gray-900 ">{item?.toUpperCase()}</span>
+              <span className="text-gray-900 font-normal">
+                {item?.toUpperCase()}
+              </span>
             </Tag>
           ))}
         />

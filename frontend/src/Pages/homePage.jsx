@@ -131,13 +131,13 @@ const HomePage = () => {
           <div className="bg-gray-100">
             <div className="flex justify-center  p-10 pb-2">
               <div className="text-center lg:text-lg md:text-md sm:text-sm mx-2 text-blue-400 font-bold  drop-shadow-lg ">
-                POPULAR PROJECTS FROM YOUR COLLEGE
+                POPULAR PROJECTS FROM {auth?.user?.collegeName}{" "}
               </div>
             </div>
             <div className="flex justify-center p-0 m-0">
               <FaMoneyBillTrendUp
                 size={36}
-                className="text-blue-400 ml-1 mb-5"
+                className="text-blue-400 ml-1 mb-5 shadow-xl"
               />
             </div>
           </div>
