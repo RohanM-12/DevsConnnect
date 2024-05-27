@@ -7,9 +7,32 @@ import { PiBrowsersFill } from "react-icons/pi";
 import { FaLaptopCode } from "react-icons/fa";
 import { FaSquareGithub } from "react-icons/fa6";
 import { RiTeamFill } from "react-icons/ri";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import PostCard from "../Components/PostCard";
 const HomePage = () => {
   const navigate = useNavigate();
+  const [popularPosts, setPopularPosts] = useState([]);
   const [auth] = useAuth();
+  const fetchData = async () => {
+    try {
+      if (auth && auth?.user) {
+        const { data } = await axios.get("/api/v1/posts/getFilteredPosts", {
+          params: { collegeName: auth?.user?.collegeName },
+        });
+        console.log(data);
+        if (data) {
+          setPopularPosts(data?.data);
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className="">
       {/* <h1>{JSON.stringify(auth)}</h1> */}
@@ -90,7 +113,7 @@ const HomePage = () => {
             <FaLaptopCode size={30} className="my-2 " />
           </span>
           <span className=" lg:block md:hidden sm:hidden text-sm">
-            COLLABORATE WITH DEVS{" "}
+            COLLABORATE WITH DEVS
           </span>
         </div>
         <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl">
@@ -102,6 +125,35 @@ const HomePage = () => {
           </span>
         </div>
       </div>
+      {/* Populars from your college Section Start*/}
+      {auth && auth?.user && popularPosts?.length > 0 && (
+        <div>
+          <div className="bg-gray-100">
+            <div className="flex justify-center  p-10 pb-2">
+              <div className="text-center lg:text-lg md:text-md sm:text-sm mx-2 text-blue-400 font-bold  drop-shadow-lg ">
+                POPULAR PROJECTS FROM YOUR COLLEGE
+              </div>
+            </div>
+            <div className="flex justify-center p-0 m-0">
+              <FaMoneyBillTrendUp
+                size={36}
+                className="text-blue-400 ml-1 mb-5"
+              />
+            </div>
+          </div>
+          <div className="p-10 border-2 border-gray-200 mt-4 mx-5 rounded-xl shadow-md my-5">
+            <div className="md:grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 sm:flex sm:justify-center">
+              {popularPosts?.map((post) => (
+                <>
+                  <PostCard post={post} key={post.id} hideBottom />
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Populars from your college Section End*/}
     </div>
   );
 };

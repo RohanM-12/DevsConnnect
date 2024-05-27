@@ -325,39 +325,84 @@ export const removeLikePost = async (req, res) => {
 export const getFilteredPosts = async (req, res) => {
   try {
     const { keyword } = req.query;
+    const { collegeName } = req.query;
+    if (keyword) {
+      const posts = await prisma.posts.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                contains: keyword,
+                mode: "insensitive", // This makes the search case-insensitive
+              },
+            },
+            {
+              description: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+            {
+              technologiesUsed: {
+                has: keyword.toUpperCase(),
+              },
+            },
+          ],
+        },
+        include: {
+          contributionRequests: true, // Include contribution requests if needed\
+          user: true,
+        },
+      });
+      const modifiedPosts = posts.map((post) => ({
+        ...post,
+        user: post.user.name,
+      }));
+      res.json({ status: 200, data: modifiedPosts, message: "success" });
+    }
+    if (collegeName) {
+      const postsData = await prisma.posts.findMany({
+        where: {
+          user: {
+            collegeName: collegeName,
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          gitHubLink: true,
+          deployedLink: true,
+          demoVideoLink: true,
+          thumbnailImgURL: true,
+          technologiesUsed: true,
+          created_at: true,
+          user: {
+            select: {
+              name: true,
+              collegeName: true,
+            },
+          },
+          likes: true,
+        },
+      });
 
-    const posts = await prisma.posts.findMany({
-      where: {
-        OR: [
-          {
-            name: {
-              contains: keyword,
-              mode: "insensitive", // This makes the search case-insensitive
-            },
-          },
-          {
-            description: {
-              contains: keyword,
-              mode: "insensitive",
-            },
-          },
-          {
-            technologiesUsed: {
-              has: keyword.toUpperCase(),
-            },
-          },
-        ],
-      },
-      include: {
-        contributionRequests: true, // Include contribution requests if needed\
-        user: true,
-      },
-    });
-    const modifiedPosts = posts.map((post) => ({
-      ...post,
-      user: post.user.name,
-    }));
-    res.json({ status: 200, data: modifiedPosts, message: "success" });
+      const modifiedPostsData = postsData
+        .map((post) => ({
+          ...post,
+          user: post.user.name,
+          collegeName: post.user.collegeName,
+          numLikes: post.likes.length,
+        }))
+        .sort((a, b) => b.numLikes - a.numLikes)
+        .slice(0, 3);
+
+      return res.json({
+        status: 200,
+        message: "success",
+        data: modifiedPostsData,
+      });
+    }
   } catch (error) {
     res.json({
       status: 500,

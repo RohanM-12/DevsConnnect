@@ -10,7 +10,7 @@ import axios from "axios";
 import RequestContribModal from "./RequestContribModal";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 const { Meta } = Card;
-const PostCard = ({ post, isMyProfile, deletePost }) => {
+const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
@@ -65,74 +65,78 @@ const PostCard = ({ post, isMyProfile, deletePost }) => {
             />
           </>
         }
-        actions={[
-          <>
-            <span className="flex justify-center ml-5 mt-0 text-red-500 ">
-              {liked ? (
-                <FaHeart
-                  key={"liked"}
-                  onClick={() => handleLike(post?.id, 0)}
-                  className="text-red-600 "
-                  size={23}
-                />
-              ) : (
-                <FaRegHeart
-                  key={"unliked"}
-                  onClick={() => handleLike(post?.id, 1)}
-                  className="text-red-600"
-                  size={23}
-                />
-              )}
-              <Badge
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  color: "black",
-                  userSelect: "none",
-                }}
-                count={likesCount}
-                className="mx-1 "
-              />
-            </span>
-          </>,
-          <>
-            <span className="flex justify-center items-center mt-0 text-blue-500 ">
-              {isMyProfile ? (
-                <AiFillDelete
-                  size={25}
-                  onClick={() => deletePost({ id: post?.id })}
-                  className=""
-                />
-              ) : !ContributionRequestStatus ? (
-                <FaCodePullRequest
-                  key={"request"}
-                  size={18}
-                  onClick={() => {
-                    if (!auth?.user) {
-                      return navigate("/login");
-                    }
-                    setOpen(true);
-                  }}
-                />
-              ) : (
+        actions={
+          hideBottom
+            ? []
+            : [
                 <>
-                  <IoCheckmarkDoneCircleSharp
-                    className="text-green-500"
-                    size={25}
-                  />
-                </>
-              )}
-            </span>
-          </>,
-          <>
-            <span className="flex justify-center items-center mt-0 text-gray-600">
-              <BiDetail
-                onClick={() => navigate(`/detailsPost/${post?.id}`)}
-                key="ellipsis"
-                size={24}
-              />
-            </span>
-          </>,
-        ]}
+                  <span className="flex justify-center ml-5 mt-0 text-red-500 ">
+                    {liked ? (
+                      <FaHeart
+                        key={"liked"}
+                        onClick={() => handleLike(post?.id, 0)}
+                        className="text-red-600 "
+                        size={23}
+                      />
+                    ) : (
+                      <FaRegHeart
+                        key={"unliked"}
+                        onClick={() => handleLike(post?.id, 1)}
+                        className="text-red-600"
+                        size={23}
+                      />
+                    )}
+                    <Badge
+                      style={{
+                        backgroundColor: "#FFFFFF",
+                        color: "black",
+                        userSelect: "none",
+                      }}
+                      count={likesCount}
+                      className="mx-1 "
+                    />
+                  </span>
+                </>,
+                <>
+                  <span className="flex justify-center items-center mt-0 text-blue-500 ">
+                    {isMyProfile ? (
+                      <AiFillDelete
+                        size={25}
+                        onClick={() => deletePost({ id: post?.id })}
+                        className=""
+                      />
+                    ) : !ContributionRequestStatus ? (
+                      <FaCodePullRequest
+                        key={"request"}
+                        size={18}
+                        onClick={() => {
+                          if (!auth?.user) {
+                            return navigate("/login");
+                          }
+                          setOpen(true);
+                        }}
+                      />
+                    ) : (
+                      <>
+                        <IoCheckmarkDoneCircleSharp
+                          className="text-green-500"
+                          size={25}
+                        />
+                      </>
+                    )}
+                  </span>
+                </>,
+                <>
+                  <span className="flex justify-center items-center mt-0 text-gray-600">
+                    <BiDetail
+                      onClick={() => navigate(`/detailsPost/${post?.id}`)}
+                      key="ellipsis"
+                      size={24}
+                    />
+                  </span>
+                </>,
+              ]
+        }
       >
         <Meta
           avatar={
