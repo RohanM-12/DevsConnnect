@@ -236,6 +236,21 @@ export const deletePost = async (req, res) => {
   }
 };
 
+//Update post Controller
+
+export const updatePost = async (req, res) => {
+  try {
+    console.log("params", req.query);
+    console.log(req.body);
+  } catch (error) {
+    res.json({
+      status: 500,
+      message: "Internal server Error",
+      error: error.message,
+    });
+  }
+};
+
 export const likePost = async (req, res) => {
   try {
     console.log(req.body);

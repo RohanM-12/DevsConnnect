@@ -8,9 +8,10 @@ import { useAuth } from "../contexts/authContext";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import RequestContribModal from "./RequestContribModal";
+import { FiEdit } from "react-icons/fi";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 const { Meta } = Card;
-const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
+const PostCard = ({ post, isMyProfile, deletePost, hideBottom, edit }) => {
   const [liked, setLiked] = useState();
   const [likesCount, setLikesCount] = useState(post?.likes?.length);
   const [auth] = useAuth();
@@ -43,6 +44,8 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
       navigate("/login");
     }
   };
+
+  const handleEditPost = async (id) => {};
 
   return (
     <div key={post?.id} className="mb-5 flex justify-center lg:ml-1 mx-2">
@@ -127,13 +130,25 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
                   </span>
                 </>,
                 <>
-                  <span className="flex justify-center items-center mt-0 text-gray-600">
-                    <BiDetail
-                      onClick={() => navigate(`/detailsPost/${post?.id}`)}
-                      key="ellipsis"
-                      size={24}
-                    />
-                  </span>
+                  {edit ? (
+                    <>
+                      <span className="flex justify-center items-center mt-0 text-gray-600">
+                        <FiEdit
+                          onClick={handleEditPost}
+                          size={23}
+                          className="text-gray-600"
+                        />
+                      </span>
+                    </>
+                  ) : (
+                    <span className="flex justify-center items-center mt-0 text-gray-600">
+                      <BiDetail
+                        onClick={() => navigate(`/detailsPost/${post?.id}`)}
+                        key="ellipsis"
+                        size={24}
+                      />
+                    </span>
+                  )}
                 </>,
               ]
         }
@@ -197,7 +212,7 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom }) => {
               key={i}
               // color={"#E0F7FC"}
               color="gold"
-              className="p-1 m-0.5 rounded-xl text-center  "
+              className="p-1 m-0.5 rounded-xl text-center mx-2 "
             >
               <span className="text-gray-900 font-normal">
                 {item?.toUpperCase()}

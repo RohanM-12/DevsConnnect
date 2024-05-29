@@ -60,6 +60,7 @@ const MyUploads = () => {
               key={post?.id}
               isMyProfile={post?.id}
               deletePost={deletePost}
+              edit
             />
           ))}
       </div>

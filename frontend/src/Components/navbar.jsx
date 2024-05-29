@@ -5,20 +5,21 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../contexts/authContext";
 import { RiLoginCircleLine } from "react-icons/ri";
 import { FaCompass } from "react-icons/fa";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { IoIosPeople } from "react-icons/io";
 const Navbar = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
   const items = [
     {
-      label: "Profile",
+      label: <span className="font-semibold">Profile</span>,
       icon: <PiUserListBold size={25} className="my-3" />,
       onClick: () => {
         navigate("/myProfile");
       },
     },
     {
-      label: "LogOut",
+      label: <span className="font-semibold">LogOut</span>,
       icon: <RiLogoutCircleLine size={25} className="my-3" />,
       onClick: () => {
         navigate("/login");
@@ -114,6 +115,9 @@ const Navbar = () => {
                     {auth &&
                       auth?.user?.name?.trim()?.split(" ")[0]?.toUpperCase()}
                   </p>
+                  {auth && auth?.user && (
+                    <IoMdArrowDropdown className="text-white" size={20} />
+                  )}
                 </span>
               </Space>
             </a>

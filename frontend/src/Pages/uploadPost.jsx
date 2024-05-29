@@ -198,7 +198,7 @@ const UploadPost = () => {
               <Form.Item label="Demo Video URL" name={"demoVideoLink"}>
                 <Input placeholder="Do you have Demo Video?" />
               </Form.Item>
-              <Form.Item label="GitHub Repo. URL" name={"gitHubLink"}>
+              <Form.Item label="GitHub Repository URL" name={"gitHubLink"}>
                 <Input placeholder="Paste your GitHub repository URL" />
               </Form.Item>
               <Form.Item className="my-6 flex justify-center py-4 ">

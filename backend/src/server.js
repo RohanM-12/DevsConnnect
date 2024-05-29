@@ -5,11 +5,10 @@ import cors from "cors";
 import serveStatic from "serve-static";
 import path from "path";
 import { fileURLToPath } from "url";
-import axios from "axios";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   return res.send("hello /");
@@ -29,45 +28,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
 app.use("/uploads", serveStatic(path.join(__dirname, "routes", "uploads")));
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
-// app.use("*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
-// });
-// GitHub API endpoint
-// app.get("/github-repo/:owner/:repo", async (req, res) => {
-//   const { owner, repo } = req.params;
-//   try {
-//     const response = await axios.get(
-//       `https://api.github.com/repos/${owner}/${repo}`
-//     );
-//     res.json(response.data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
-// app.use(extraRoutes);
-
-// app.get("/api/institutes/:name/institute", async (req, res) => {
-//   const { name } = req.params;
-//   try {
-//     const response = await fetch(
-//       `https://api.geeksforgeeks.org/api/institutes/${name}/institute`
-//     );
-//     const data = await response.json();
-//     res.json(data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
-// app files
 
 import appRoute from "./routes/index.js";
 import { METHODS } from "http";
+import prisma from "./db/db.config.js";
 app.use(appRoute);
 
 app.listen(PORT, () =>
   console.log(chalk.bgBlue(`server running on port ${PORT}`))
 );
+
+(async () => {
+  try {
+    await prisma.$connect();
+    console.log(chalk.bgWhite(chalk.green("Connected to the database")));
+  } catch (e) {
+    console.error(chalk.red("Failed to connect to the database"), e);
+  }
+})();

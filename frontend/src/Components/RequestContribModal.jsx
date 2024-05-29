@@ -91,6 +91,10 @@ const RequestContribModal = ({
             />
           </Form.Item>
         </Form>
+        <label>
+          <span className="font-semibold">Note : </span> Check status of your
+          request after creating it, in your profile section
+        </label>
       </Modal>
     </>
   );
