@@ -17,7 +17,7 @@ datasource db {
   created_At DateTime @default(now())
   posts          Posts[]
   contributionRequests ContributionRequests[]
-   chatRooms             ChatRoomMember[]
+  chatRooms             ChatRoomMember[]
   messages              Message[]
  } 
 
@@ -35,10 +35,9 @@ datasource db {
   technologiesUsed String[]
   created_at DateTime @default(now())
   contributionRequests ContributionRequests[] 
-   chatRoom              ChatRoom?
+  chatRoom              ChatRoom?
  }
-
- model ContributionRequests {
+model ContributionRequests {
   id Int @id @default(autoincrement())
   requesterId Int 
   postId Int
@@ -47,18 +46,21 @@ datasource db {
   rating Int @default(0)
   wishesToWorkOn String
   created_at DateTime @default(now())
-  requester User @relation(fields: [requesterId],references: [id])
-  post Posts @relation(fields: [postId] , references: [id] , onDelete: Cascade)
-  @@unique([requesterId,postId])
- }
+  requester User @relation(fields: [requesterId], references: [id])
+  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
+  chatRoomId Int?  // Add this field to store the ChatRoom reference
+  chatRoom ChatRoom? @relation(fields: [chatRoomId], references: [id])
+  @@unique([requesterId, postId])
+}
 
 model ChatRoom {
-  id                    Int                   @id @default(autoincrement())
-  postId                Int                   @unique
-  created_at            DateTime              @default(now())
-  post                  Posts                 @relation(fields: [postId], references: [id])
-  members               ChatRoomMember[]
-  messages              Message[]
+  id Int @id @default(autoincrement())
+  postId Int @unique
+  created_at DateTime @default(now())
+  post Posts @relation(fields: [postId], references: [id])
+  members ChatRoomMember[]
+  messages Message[]
+  contributionRequests ContributionRequests[] // This can stay as it is
 }
 
 model ChatRoomMember {

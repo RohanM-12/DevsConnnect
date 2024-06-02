@@ -13,7 +13,7 @@ import UserProfile from "./Pages/userProfile";
 import PrivateRoute from "./Components/Routes/Private";
 import MyUploads from "./Pages/MyUploads";
 import ContributionRequests from "./Pages/ContributionRequests";
-import Connect from "./Pages/Connect";
+import Discuss from "./Pages/Discuss";
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
               />
             </Route>
             <Route path="/" element={<PrivateRoute />}>
-              <Route path="/connect" element={<Connect />} />
+              <Route path="/discuss" element={<Discuss />} />
             </Route>
             <Route path="/explorePosts" element={<ExplorePosts />} />
             <Route path="/detailsPost/:id" element={<DetailPost />} />

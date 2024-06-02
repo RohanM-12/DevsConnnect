@@ -47,23 +47,23 @@ const Navbar = () => {
             {/* <BsFilePost size={35} /> */}
             <FaCompass size={35} />
             <p
-              style={{ fontSize: "12px" }}
+              style={{ fontSize: "11px" }}
               className="text-white ml-1 hidden lg:flex "
             >
-              Explore
+              EXPLORE
             </p>
           </Link>
           {auth?.user && (
             <Link
               className="text-white text-lg flex items-center font-bold mb-0 "
-              to={"/connect"}
+              to={"/discuss"}
             >
               <IoIosPeople className="text-white" size={35} />
               <p
-                style={{ fontSize: "12px" }}
+                style={{ fontSize: "11px" }}
                 className="text-white ml-1 font-bold hidden lg:flex "
               >
-                Chat
+                DISCUSS
               </p>
             </Link>
           )}
@@ -109,14 +109,14 @@ const Navbar = () => {
                     </>
                   )}
                   <p
-                    style={{ fontSize: "13px" }}
+                    style={{ fontSize: "12px" }}
                     className="text-white font-mono font-bold hidden lg:flex "
                   >
                     {auth &&
                       auth?.user?.name?.trim()?.split(" ")[0]?.toUpperCase()}
                   </p>
                   {auth && auth?.user && (
-                    <IoMdArrowDropdown className="text-white" size={20} />
+                    <IoMdArrowDropdown className="text-white" size={18} />
                   )}
                 </span>
               </Space>
