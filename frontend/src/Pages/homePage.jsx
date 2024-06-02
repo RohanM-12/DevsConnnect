@@ -91,7 +91,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="w-full h-44 bg-blue-100 my-5 lg:grid md:grid grid-cols-5 items-center text-center hidden ">
-        <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl">
+        <div className="bg-blue-400 rounded-full p-6 w-1/2 mx-20 font-semibold font-mono text-white drop-shadow-2xl ">
           <span className="flex justify-center items-center">
             <FaFileUpload size={30} className="my-2" />
           </span>

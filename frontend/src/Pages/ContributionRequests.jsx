@@ -49,8 +49,12 @@ const ContributionRequests = () => {
         }
       );
       if (result?.data?.status == 200) {
-        toast.success("Status updated...");
+        toast.success("Status updated ... ");
         fetchData();
+      }
+
+      if (result?.data?.chatRoomUserStatus == 200) {
+        toast.success("User added to chatroom");
       }
     } catch (error) {
       console.log(error);

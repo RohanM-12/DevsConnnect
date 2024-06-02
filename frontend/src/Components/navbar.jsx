@@ -39,7 +39,7 @@ const Navbar = () => {
             </span>
           </span>
         </Link>
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-6">
           <Link
             to="/explorePosts"
             className="text-white text-lg flex items-center font-bold mb-0 "
@@ -63,7 +63,7 @@ const Navbar = () => {
                 style={{ fontSize: "12px" }}
                 className="text-white ml-1 font-bold hidden lg:flex "
               >
-                Connect
+                Chat
               </p>
             </Link>
           )}

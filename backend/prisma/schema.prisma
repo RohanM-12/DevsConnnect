@@ -17,7 +17,9 @@ datasource db {
   created_At DateTime @default(now())
   posts          Posts[]
   contributionRequests ContributionRequests[]
- }
+   chatRooms             ChatRoomMember[]
+  messages              Message[]
+ } 
 
  model Posts {
   id  Int @id @default(autoincrement()) 
@@ -33,6 +35,7 @@ datasource db {
   technologiesUsed String[]
   created_at DateTime @default(now())
   contributionRequests ContributionRequests[] 
+   chatRoom              ChatRoom?
  }
 
  model ContributionRequests {
@@ -49,4 +52,32 @@ datasource db {
   @@unique([requesterId,postId])
  }
 
+model ChatRoom {
+  id                    Int                   @id @default(autoincrement())
+  postId                Int                   @unique
+  created_at            DateTime              @default(now())
+  post                  Posts                 @relation(fields: [postId], references: [id])
+  members               ChatRoomMember[]
+  messages              Message[]
+}
+
+model ChatRoomMember {
+  id                    Int                   @id @default(autoincrement())
+  userId                Int
+  chatRoomId            Int
+  joined_at             DateTime              @default(now())
+  user                  User                  @relation(fields: [userId], references: [id])
+  chatRoom              ChatRoom              @relation(fields: [chatRoomId], references: [id])
+  @@unique([userId, chatRoomId])
+}
+
+model Message {
+  id                    Int                   @id @default(autoincrement())
+  chatRoomId            Int
+  senderId              Int
+  content               String
+  sent_at               DateTime              @default(now())
+  chatRoom              ChatRoom              @relation(fields: [chatRoomId], references: [id])
+  sender                User                  @relation(fields: [senderId], references: [id])
+}
  
