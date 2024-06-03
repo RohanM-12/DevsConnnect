@@ -55,7 +55,7 @@ const DetailPost = () => {
             <div className="flex justify-center ">
               <Image
                 width={600}
-                src={`http://localhost:5000${
+                src={`${import.meta.env.VITE_REACT_APP_API}${
                   postData?.thumbnailImgURL?.split("/")?.length > 1
                     ? postData?.thumbnailImgURL
                     : "/uploads/default.gif"

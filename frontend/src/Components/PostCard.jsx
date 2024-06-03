@@ -57,7 +57,7 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom, edit }) => {
             <img
               className="hover:cursor-pointer"
               // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-              src={`http://localhost:5000${
+              src={`${import.meta.env.VITE_REACT_APP_API}${
                 post?.thumbnailImgURL?.split("/")?.length > 1
                   ? post.thumbnailImgURL
                   : "/uploads/default.gif"

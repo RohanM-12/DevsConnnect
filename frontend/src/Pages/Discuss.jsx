@@ -105,7 +105,9 @@ const Discuss = () => {
                         <Avatar
                           className="border-2 border-blue-300"
                           size={45}
-                          src={`http://localhost:5000${item?.post?.thumbnailImgURL}`}
+                          src={`${import.meta.env.VITE_REACT_APP_API}${
+                            item?.post?.thumbnailImgURL
+                          }`}
                         />
                       }
                       title={
