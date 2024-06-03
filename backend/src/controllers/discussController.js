@@ -64,7 +64,7 @@ export const sendMessage = async (req, res) => {
     res.json({
       status: 200,
       message: "Sucess",
-      msgSent,
+      data: msgSent,
     });
   } catch (error) {
     res.json({
@@ -77,10 +77,22 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   try {
-    const { chatRoomId } = req.params;
+    const { id: chatRoomId } = req.params;
+    const { userId } = req.query;
+    console.log(req.params, req.query);
     const messages = await prisma.message.findMany({
       where: {
-        chatRoomId: chatRoomId,
+        chatRoomId: parseInt(chatRoomId),
+        // userId: userId,
+      },
+      include: {
+        sender: {
+          select: {
+            id: true,
+            name: true,
+            collegeName: true,
+          },
+        },
       },
     });
     res.json({
