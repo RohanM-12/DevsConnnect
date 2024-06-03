@@ -49,3 +49,50 @@ export const getChatRoomsList = async (req, res) => {
     });
   }
 };
+
+export const sendMessage = async (req, res) => {
+  try {
+    const { chatRoomId, senderId, content } = req.body;
+    console.log(req.body);
+    const msgSent = await prisma.message.create({
+      data: {
+        chatRoomId: parseInt(chatRoomId),
+        senderId: parseInt(senderId),
+        content: content,
+      },
+    });
+    res.json({
+      status: 200,
+      message: "Sucess",
+      msgSent,
+    });
+  } catch (error) {
+    res.json({
+      status: 500,
+      message: "Error in sedning message , server Error",
+      error: error.message,
+    });
+  }
+};
+
+export const getMessages = async (req, res) => {
+  try {
+    const { chatRoomId } = req.params;
+    const messages = await prisma.message.findMany({
+      where: {
+        chatRoomId: chatRoomId,
+      },
+    });
+    res.json({
+      status: 200,
+      message: "success",
+      messages,
+    });
+  } catch (error) {
+    res.json({
+      status: 200,
+      message: "Error in getting messages , internal server error",
+      error: error.message,
+    });
+  }
+};
