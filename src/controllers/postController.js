@@ -1,5 +1,9 @@
 import prisma from "../db/db.config.js";
-
+import fs from "fs";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 export const createPost = async (req, res) => {
   try {
     console.log("Create post", req.body);
@@ -16,7 +20,7 @@ export const createPost = async (req, res) => {
     console.log("array", req.body.technologiesUsed);
 
     const uploadedFile = req.file;
-    const thumbnailImgURL = `/uploads/${uploadedFile.filename}`;
+    const thumbnailImgURL = `/${uploadedFile.filename}`;
     const uploadResult = await prisma.posts.create({
       data: {
         name: Title,
@@ -219,10 +223,17 @@ export const deletePost = async (req, res) => {
         id: parseInt(req.params.id),
       },
     });
+    console.log(resultPostDelete);
+
+    const databasePath = resultPostDelete.thumbnailImgURL;
+
+    const filePath = path.join(__dirname, "../routes", "uploads", databasePath);
 
     if (!resultPostDelete) {
       return res.json({ status: 401, message: "Post not found to delete" });
     }
+
+    await fs.promises.unlink(filePath);
 
     return res.json({
       status: 200,

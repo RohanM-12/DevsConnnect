@@ -51,10 +51,10 @@ const MyUploads = () => {
         <BsPostcardHeartFill size={26} className="mx-2 text-blue-400" />
         <span>MY UPLOADS </span>
       </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  p-8 border-2 m-1 rounded-xl shadow-md ">
-        {posts &&
-          posts.length > 0 &&
-          posts?.map((post) => (
+
+      {posts && posts.length > 0 && (
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  p-8 border-2 m-1 rounded-xl shadow-md ">
+          {posts?.map((post) => (
             <PostCard
               post={post}
               key={post?.id}
@@ -63,7 +63,9 @@ const MyUploads = () => {
               edit
             />
           ))}
-      </div>
+        </div>
+      )}
+
       {loading && (
         <div className="flex justify-center items-center mt-48">
           <Spinner Size={70} />
@@ -71,7 +73,7 @@ const MyUploads = () => {
       )}
       {posts?.length < 1 && (
         <>
-          <div className="flex justify-center">
+          <div className="flex justify-center m-5">
             <div className="p-10 border-2 rounded-md w-1/2 shadow-md">
               <span>
                 <Empty description={""} />
