@@ -44,6 +44,7 @@ const TechSelect = ({ techList, setTechList }) => {
       value: "mongodb",
       label: "MongoDB",
     },
+
     {
       value: "python",
       label: "Python",

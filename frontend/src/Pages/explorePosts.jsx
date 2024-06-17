@@ -32,7 +32,6 @@ const ExplorePosts = () => {
 
   const handleSearch = async (value) => {
     try {
-      console.log(value);
       setLoading(true);
       const { data } = await axios.get("/api/v1/posts/getFilteredPosts", {
         params: { keyword: value },

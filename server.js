@@ -25,7 +25,6 @@ app.use(express.static("uploads"));
 app.use(serveStatic(path.join(__dirname, "./src/routes", "uploads")));
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 // app.use(express.static(path.join(__dirname, "../frontend/dist")));
-console.log(__dirname);
 import appRoute from "./src/routes/index.js";
 import prisma from "./src/db/db.config.js";
 app.use(appRoute);

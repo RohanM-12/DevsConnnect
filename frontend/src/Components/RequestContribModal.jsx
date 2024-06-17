@@ -14,13 +14,11 @@ const RequestContribModal = ({
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
   const [auth] = useAuth();
-  console.log(auth?.user?.id);
+
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      if (values && postData) {
-        console.log("Form Data:", values, postData);
-      }
+
       setConfirmLoading(true);
       try {
         const { data } = await axios.post(
@@ -53,7 +51,6 @@ const RequestContribModal = ({
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setOpen(false);
     form.resetFields(); // Reset form fields when modal is closed
   };

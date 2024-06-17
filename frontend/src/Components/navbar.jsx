@@ -39,7 +39,7 @@ const Navbar = () => {
             </span>
           </span>
         </Link>
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-4">
           <Link
             to="/explorePosts"
             className="text-white text-lg flex items-center font-bold mb-0 "

@@ -14,7 +14,7 @@ const Login = () => {
       const result = await axios.get("/api/v1/user/login", {
         params: values,
       });
-      console.log(result);
+
       // toast.success();
       if (result?.data?.status === 200) {
         setAuth({ user: result?.data?.userData, token: result?.data?.token });

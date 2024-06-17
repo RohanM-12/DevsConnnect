@@ -27,7 +27,6 @@ const UploadPost = () => {
         return;
       }
       if (!urlRegex().test(values.gitHubLink)) {
-        console.log(values);
         toast("PLease enter a valid URL", {
           icon: <DiGithubBadge size={25} className="text-blue-500" />,
         });
@@ -58,7 +57,6 @@ const UploadPost = () => {
   };
 
   const handleImageUpload = (file) => {
-    console.log(file);
     setThumbnailImage(file);
     setPreviewImage(URL.createObjectURL(file));
   };
@@ -151,6 +149,7 @@ const UploadPost = () => {
                     { label: "NODE.JS", value: "NODE.JS" },
                     { label: "EXPRESS", value: "EXPRESS" },
                     { label: "MONGODB", value: "MONGODB" },
+                    { label: "SQL", value: "SQL" },
                     { label: "JAVASCRIPT", value: "JAVASCRIPT" },
                     { label: "HTML", value: "HTML" },
                     { label: "CSS", value: "CSS" },

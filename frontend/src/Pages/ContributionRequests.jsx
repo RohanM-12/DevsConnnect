@@ -37,7 +37,6 @@ const ContributionRequests = () => {
   }, []);
 
   const handleStatusChange = async (status, item) => {
-    console.log(item);
     try {
       const result = await axios.put(
         "api/v1/posts/ContributionRequests/updateStatus",

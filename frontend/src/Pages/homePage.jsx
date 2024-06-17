@@ -21,7 +21,7 @@ const HomePage = () => {
         const { data } = await axios.get("/api/v1/posts/getFilteredPosts", {
           params: { collegeName: auth?.user?.collegeName },
         });
-        console.log(data);
+
         if (data) {
           setPopularPosts(data?.data);
         }

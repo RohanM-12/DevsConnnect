@@ -9,10 +9,10 @@ import { VscLiveShare } from "react-icons/vsc";
 import RequestContribModal from "../Components/RequestContribModal";
 import { FaCodeMerge } from "react-icons/fa6";
 import dayjs from "dayjs";
+
 const DetailPost = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState(null);
-  console.log(postData);
   const [ContributionRequestStatus, setContributionRequestStatus] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -28,6 +28,7 @@ const DetailPost = () => {
     "cyan",
     "magenta",
   ];
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -48,11 +49,11 @@ const DetailPost = () => {
   }, [id]);
 
   return (
-    <div className="container  mt-8 ">
+    <div className="container mx-auto mt-8">
       {postData ? (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="flex justify-center ">
+            <div className="flex justify-center">
               <Image
                 width={600}
                 src={`${import.meta.env.VITE_REACT_APP_API}${
@@ -60,11 +61,12 @@ const DetailPost = () => {
                     ? postData?.thumbnailImgURL
                     : "/uploads/default.gif"
                 }`}
+                className="max-w-full h-auto lg:max-w-lg"
               />
             </div>
             <div className="p-2">
               <h2 className="text-2xl font-bold mb-4">
-                <> {postData?.name}</>
+                <>{postData?.name}</>
               </h2>
               <p className="text-gray-600 mb-4">{postData?.description}</p>
               <div className="flex items-center mb-4">
@@ -75,19 +77,18 @@ const DetailPost = () => {
                 <span className="font-semibold mr-2">College Name:</span>
                 <span>{postData?.collegeName}</span>
               </div>
-              <div className="flex  justify-start items-center">
+              <div className="flex justify-start items-center">
                 <FaHeart
                   key={"liked"}
-                  className="text-red-600 mx-2 "
+                  className="text-red-600 mx-2"
                   size={23}
                 />
-
                 <span className="mx-1">{postData?.likes?.length}</span>
               </div>
 
               <div className="flex items-center mb-4">
                 <span className="font-semibold mr-2">Technologies Used:</span>
-                <div>
+                <div className="flex flex-wrap">
                   {postData?.technologiesUsed?.map((item, i) => (
                     <Tag
                       key={i}
@@ -101,17 +102,23 @@ const DetailPost = () => {
                   ))}
                 </div>
               </div>
-              <div className=" flex items-center justify-center p-10">
-                <Link to={postData?.gitHubLink}>
+              <div className="flex justify-center sm:flex-wrap lg:justify-center p-10">
+                <Link
+                  to={postData?.gitHubLink}
+                  className="mr-4 sm:mr-0 sm:mb-4 lg:mr-4 lg:mb-0"
+                >
                   <Tag
-                    className="p-3 w-36 "
+                    className="p-3 w-36"
                     icon={<FaGithub size={20} />}
                     color="black"
                   >
                     GITHUB
                   </Tag>
                 </Link>
-                <Link to={postData?.demoVideoLink}>
+                <Link
+                  to={postData?.demoVideoLink}
+                  className="mr-4 sm:mr-0 sm:mb-4 lg:mr-4 lg:mb-0"
+                >
                   <Tag
                     className="p-3 w-36"
                     icon={<MdOndemandVideo size={20} />}
@@ -133,97 +140,49 @@ const DetailPost = () => {
               </div>
             </div>
           </div>
-          <div className="p-10 border-2 m-10 rounded-lg shadow-lg">
-            {/* <div className="p-10 border-2 mx-10 rounded-xl shadow-sm"> */}
-            <div className=" drop-shadow-xl mb-5 text-lg font-semibold text-gray-700 flex justify-center items-center">
-              <FaCodeMerge className="mx-4 text-green-300 " size={25} />
-              <span>CONTRIBUTORS OF {postData?.name?.toUpperCase()} </span>
+          <div className="p-5 border-2 m-5 rounded-lg shadow-lg">
+            <div className="drop-shadow-xl mb-5 text-lg font-semibold text-gray-700 flex justify-center items-center">
+              <FaCodeMerge className="mx-4 text-green-300" size={25} />
+              <span>CONTRIBUTORS OF {postData?.name?.toUpperCase()}</span>
             </div>
 
-            <div>
-              <List
-                itemLayout="vertical"
-                dataSource={postData.contributionRequests}
-                size="small"
-                renderItem={(item, index) => (
-                  <div className="flex justify-center">
-                    <List.Item className="py-0  w-4/5">
-                      <List.Item.Meta
-                        avatar={
-                          <>
-                            <Avatar
-                              className="drop-shadow-2xl"
-                              style={{
-                                backgroundColor: "#fde3cf",
-                                color: "#f56a00",
-                                padding: "20px",
-                              }}
-                            >
-                              {item?.requester?.name
-                                ?.slice(0, 1)
-                                ?.toUpperCase()}
-                            </Avatar>
-                            <div className="flex justify-center">
-                              <div className="border-r-2 mt-1 border-blue-300 p-5 px-0 "></div>
-                            </div>
-                          </>
-                        }
-                        title={
-                          <>
-                            <p>
-                              <span>{item?.requester?.name} </span>
-                              <span className="lg:float-right md:float-right sm:float-none sm:mx-2">
-                                {dayjs(item?.created_at)?.format("DD-MM-YYYY")}
-                              </span>
-                            </p>
-                            <div>
-                              <span className=" flex items-center float-right p-3">
-                                <span className="text-gray-400 mr-1">
-                                  Rating :{" "}
-                                </span>
-                                <Rate disabled value={item?.rating} />
-                              </span>
-                            </div>
-                          </>
-                        }
-                        description={
-                          <>
-                            <div>
-                              <p>
-                                {" "}
-                                <span className="font-semibold">
-                                  Worked On :{" "}
-                                </span>
-                                {item?.wishesToWorkOn}
-                              </p>
-                              <p>
-                                <span className="font-semibold">
-                                  College name :{" "}
-                                </span>
-                                {item?.requester?.collegeName}
-                              </p>
-                            </div>
-                          </>
-                        }
-                      />
-                    </List.Item>
-                  </div>
-                )}
-              />
-            </div>
-
-            {/* {postData?.contributionRequests?.map((item) => (
-                <>
-                  <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {postData.contributionRequests?.map((item, index) => (
+                <div
+                  className="bg-white rounded-lg shadow-md overflow-hidden"
+                  key={index}
+                >
+                  <div className="flex items-center p-4">
                     <Avatar
-                      style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+                      className="drop-shadow-2xl"
+                      style={{
+                        backgroundColor: "#fde3cf",
+                        color: "#f56a00",
+                        padding: "10px",
+                      }}
                     >
                       {item?.requester?.name?.slice(0, 1)?.toUpperCase()}
                     </Avatar>
+                    <div className="ml-3">
+                      <p className="font-semibold">{item?.requester?.name}</p>
+                      <p className="text-gray-500 text-sm">
+                        {dayjs(item?.created_at)?.format("DD-MM-YYYY")}
+                      </p>
+                    </div>
                   </div>
-                </>
-              ))} */}
-            {/* </div> */}
+                  <div className="p-4">
+                    <p className="font-semibold">Worked On:</p>
+                    <p>{item?.wishesToWorkOn}</p>
+                    <p className="font-semibold mt-2">College name:</p>
+                    <p>{item?.requester?.collegeName}</p>
+                  </div>
+                  <div className="p-4 border-t flex items-center justify-between">
+                    <span className="text-gray-500 text-sm">Rating:</span>
+                    <Rate disabled value={item?.rating} />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </>
       ) : (

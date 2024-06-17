@@ -22,12 +22,11 @@ const Discuss = () => {
   //get The list of chats the user is member of
   const fetchChatListData = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/${auth?.user?.id}/discuss/getChatRooms`,
+      `/api/v1/${auth?.user?.id}/discuss/getChatRooms`,
       { params: { userId: auth?.user?.id } }
     );
     if (data) {
       setChatList(data?.data);
-      //  console.log(data.data);
     }
   };
 
@@ -39,7 +38,6 @@ const Discuss = () => {
         { params: { userId: auth?.user?.id } }
       );
       if (data) {
-        console.log(data.messages);
         setMessages(data.messages);
       }
     } catch (error) {
@@ -58,7 +56,7 @@ const Discuss = () => {
           content: messageInput,
         }
       );
-      console.log(data);
+
       if (data?.data) {
         fetchMessages(chatRoomId);
         setMessageInput("");
@@ -74,7 +72,7 @@ const Discuss = () => {
   return (
     <>
       <div>
-        <div className="grid grid-cols-1 m-5 lg:grid-cols-3 md:grid-cols-3 ">
+        <div className="grid grid-cols-1 m-1 lg:grid-cols-3 md:grid-cols-3  ">
           <div className="rounded-lg border-2 mx-2 col-span-1 drop-shadow-md shadow-md ">
             <div className=" p-2 m-3 font-bold text-gray-600 flex justify-center items-center">
               <span>
@@ -124,7 +122,7 @@ const Discuss = () => {
               )}
             />
           </div>
-          <div className=" rounded-lg border-2 mx-2 col-span-2 shadow-md ">
+          <div className=" rounded-lg border-2 mx-2 col-span-2 shadow-md m-3">
             <div className=" p-2 m-3 font-bold text-gray-600 flex justify-center items-center">
               <span>
                 <BsFillChatSquareTextFill size={24} className="mx-3" />
@@ -172,7 +170,7 @@ const Discuss = () => {
               {selectedChatRoom?.id ? (
                 <Input
                   placeholder="Message"
-                  className="w-3/4 border-2 border-gray-400"
+                  className=" lg:w-3/4 border-2 border-gray-400"
                   size="large"
                   onChange={(e) => setMessageInput(e.target.value)}
                   value={messageInput}

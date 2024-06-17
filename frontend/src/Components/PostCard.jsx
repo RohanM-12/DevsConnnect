@@ -19,7 +19,7 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom, edit }) => {
   const [ContributionRequestStatus, setContributionRequestStatus] = useState(
     (post?.contributionRequests && post?.contributionRequests?.length) || 0
   );
-  console.log(post);
+
   const navigate = useNavigate();
   useEffect(() => {
     setLiked(post?.likes?.includes(auth?.user?.id?.toString()));
@@ -200,7 +200,6 @@ const PostCard = ({ post, isMyProfile, deletePost, hideBottom, edit }) => {
               </div>
             </>
           }
-          {...console.log(post?.technologiesUsed)}
           description={post?.technologiesUsed?.map((item, i) => (
             <Tag
               style={{

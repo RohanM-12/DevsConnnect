@@ -8,7 +8,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const tempAuth = JSON.parse(localStorage.getItem("auth"));
     if (tempAuth) {
-      console.log(tempAuth);
       setAuth({
         user: tempAuth?.user,
         token: tempAuth?.token,

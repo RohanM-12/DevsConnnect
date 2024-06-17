@@ -27,14 +27,13 @@ const UserProfile = () => {
     });
   }, [auth]);
   const onFinish = (values) => {
-    console.log(values);
-    try {
-      if (values?.userName || values?.email || values?.collageName) {
-        console.log("Hello");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
+    // try {
+    //   if (values?.userName || values?.email || values?.collageName) {
+    //     console.log("Hello");
+    //   }
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
   };
   const fetchData = async () => {
     try {
